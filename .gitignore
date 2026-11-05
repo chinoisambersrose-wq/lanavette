@@ -1,6 +1,8 @@
 node_modules/
 dist/
 build/
+.astro/
+apps/vitrine/src/env.d.ts
 .env
 .env.*
 !.env.example

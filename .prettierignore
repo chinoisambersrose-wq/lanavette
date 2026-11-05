@@ -1,0 +1,9 @@
+node_modules
+dist
+build
+.astro
+coverage
+research
+CLAUDE.md
+docs/
+*.astro

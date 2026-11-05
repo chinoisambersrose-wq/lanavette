@@ -18,32 +18,32 @@ Référence fonctionnelle : `docs/CAHIER_DES_CHARGES.md`.
 ## Lot 1 · Socle, API et back-office minimal
 
 ### Socle
-- [ ] Monorepo npm workspaces : `apps/api`, `apps/app`, `apps/vitrine`, `packages/shared`
-- [ ] TypeScript strict, ESLint, Prettier, Husky + lint-staged
-- [ ] `.env.example` pour chaque app, chargement et validation des variables avec Zod
-- [ ] GitHub Actions : install, lint, test sur chaque push
+- [x] Monorepo npm workspaces : `apps/api`, `apps/app`, `apps/vitrine`, `packages/shared`
+- [x] TypeScript strict, ESLint, Prettier, Husky + lint-staged
+- [x] `.env.example` pour chaque app, chargement et validation des variables avec Zod
+- [x] GitHub Actions : install, lint, test sur chaque push
 
 ### API
-- [ ] Serveur Express : helmet, cors, compression, rate-limit, gestion d'erreurs centralisée, logs (pino)
-- [ ] Connexion MongoDB (Mongoose) + tests avec mongodb-memory-server
-- [ ] Modèles : `users`, `studentProfiles`, `instructorProfiles`, `formulas`, `cities`, `meetingPoints`, `examSlots`, `sessions`, `bookings`, `payments`, `lessons`, `examResults`, `waitlist`, `auditLogs`
-- [ ] Index : `sessions(formulaId, statut, dates.jour)`, `meetingPoints.location` (2dsphere), `users.email` unique
-- [ ] Auth : register, login, refresh (cookie httpOnly), logout, mot de passe oublié
-- [ ] Middleware `requireRole('eleve' | 'moniteur' | 'admin')`
-- [ ] Routes publiques : catalogue formules, villes, points de RDV, sessions publiées
-- [ ] Routes admin : CRUD formules, villes, points de RDV, examSlots, sessions, utilisateurs
-- [ ] Règle : une session ne passe à `publiee` que si son examSlot a assez de places
-- [ ] `auditLogs` sur changements de prix et actions admin sensibles
-- [ ] Script `seed` avec données `[DEMO]` : 6 formules, 1 ville, 3 points de RDV, 2 moniteurs, 4 sessions, comptes de test par rôle
-- [ ] Documentation OpenAPI (swagger-ui sur `/api/docs` en dev)
+- [x] Serveur Express : helmet, cors, compression, rate-limit, gestion d'erreurs centralisée, logs (pino)
+- [x] Connexion MongoDB (Mongoose) + tests avec mongodb-memory-server
+- [x] Modèles : `users`, `studentProfiles`, `instructorProfiles`, `formulas`, `cities`, `meetingPoints`, `examSlots`, `sessions`, `bookings`, `payments`, `lessons`, `examResults`, `waitlist`, `auditLogs`
+- [x] Index : `sessions(formulaId, statut, dates.jour)`, `meetingPoints.location` (2dsphere), `users.email` unique
+- [x] Auth : register, login, refresh (cookie httpOnly), logout, mot de passe oublié
+- [x] Middleware `requireRole('eleve' | 'moniteur' | 'admin')`
+- [x] Routes publiques : catalogue formules, villes, points de RDV, sessions publiées
+- [x] Routes admin : CRUD formules, villes, points de RDV, examSlots, sessions, utilisateurs
+- [x] Règle : une session ne passe à `publiee` que si son examSlot a assez de places
+- [x] `auditLogs` sur changements de prix et actions admin sensibles
+- [x] Script `seed` avec données `[DEMO]` : 6 formules, 1 ville, 3 points de RDV, 2 moniteurs, 4 sessions, comptes de test par rôle
+- [x] Documentation OpenAPI (swagger-ui sur `/api/docs` en dev)
 
 ### Back-office (dans `apps/app`, espace `/admin`)
-- [ ] Layout admin + routes protégées par rôle
-- [ ] Écrans : formules, villes et points de RDV, créneaux d'examen, sessions (création, duplication, publication), liste des élèves
+- [x] Layout admin + routes protégées par rôle
+- [x] Écrans : formules, villes et points de RDV, créneaux d'examen, sessions (création, duplication, publication), liste des élèves
 
 ### Tests obligatoires
-- [ ] Auth et droits par rôle (un élève ne peut pas appeler une route admin)
-- [ ] Publication de session refusée sans créneau d'examen
+- [x] Auth et droits par rôle (un élève ne peut pas appeler une route admin)
+- [x] Publication de session refusée sans créneau d'examen
 
 ## Lot 2 · Réservation, paiement et espace élève
 
