@@ -8,13 +8,31 @@ import {
   StudentsAdminPage,
 } from './features/index.js';
 import AdminLayout from './layouts/AdminLayout.js';
+import PublicLayout from './layouts/PublicLayout.js';
+import CatalogPage from './pages/CatalogPage.js';
 import LoginPage from './pages/LoginPage.js';
+import RegisterPage from './pages/RegisterPage.js';
+import SessionsPage from './pages/SessionsPage.js';
+import StudentDashboardPage from './pages/StudentDashboardPage.js';
 
 export default function App(): JSX.Element {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/admin" replace />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<Navigate to="/formules" replace />} />
+        <Route path="/formules" element={<CatalogPage />} />
+        <Route path="/sessions" element={<SessionsPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/inscription" element={<RegisterPage />} />
+        <Route
+          path="/mon-compte"
+          element={
+            <RequireRole roles={['eleve']}>
+              <StudentDashboardPage />
+            </RequireRole>
+          }
+        />
+      </Route>
 
       <Route
         path="/admin"

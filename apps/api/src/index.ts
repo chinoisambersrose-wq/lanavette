@@ -2,9 +2,12 @@ import { createApp } from './app.js';
 import { connectDb } from './config/db.js';
 import { env } from './config/env.js';
 import { logger } from './config/logger.js';
+import { scheduleBookingExpiration } from './jobs/expireBookings.cron.js';
 
 async function main(): Promise<void> {
   await connectDb(env.MONGODB_URI);
+
+  scheduleBookingExpiration();
 
   const app = createApp();
   app.listen(env.PORT, () => {

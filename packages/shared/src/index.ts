@@ -8,3 +8,4 @@ export * from './schemas/formula.js';
 export * from './schemas/city.js';
 export * from './schemas/examSlot.js';
 export * from './schemas/session.js';
+export * from './schemas/booking.js';

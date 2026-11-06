@@ -25,5 +25,6 @@ module.exports = {
     'research',
     '*.cjs',
     '*.astro',
+    '**/src/env.d.ts',
   ],
 };

@@ -1,0 +1,24 @@
+---
+import FormulaCard from '../components/FormulaCard.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getFormulas } from '../lib/api.js';
+
+const formulas = (await getFormulas()).filter((f) => f.boite === 'automatique');
+---
+
+<BaseLayout
+  title="Permis automatique en accéléré — [NOM]"
+  description="Formules de permis accéléré en boîte automatique : prix, durée et dates disponibles."
+>
+  <section class="mx-auto max-w-6xl px-4 py-12">
+    <h1 class="text-3xl font-bold text-slate-800">Permis automatique</h1>
+    <p class="mt-3 max-w-2xl text-slate-600">
+      La boîte automatique simplifie l'apprentissage de la conduite : moins de manipulations,
+      concentration sur la circulation. Nos formules en boîte automatique :
+    </p>
+
+    <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+      {formulas.map((formula) => <FormulaCard formula={formula} />)}
+    </div>
+  </section>
+</BaseLayout>

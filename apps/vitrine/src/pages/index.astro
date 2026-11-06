@@ -1,21 +1,143 @@
 ---
-const nomMarque = '[NOM]';
+import CtaBanner from '../components/CtaBanner.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import FormulaCard from '../components/FormulaCard.astro';
+import TestimonialBlock from '../components/TestimonialBlock.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCities, getFormulas } from '../lib/api.js';
+
+const formulas = await getFormulas();
+const cities = await getCities();
+
+const categories = [
+  { key: 'voiture', label: 'Voiture' },
+  { key: 'conduite_accompagnee', label: 'Conduite accompagnée' },
+  { key: 'code', label: 'Code' },
+  { key: 'passerelle', label: 'Passerelle' },
+] as const;
+
+const faqItems = [
+  {
+    question: 'Combien de temps avant de passer l\'examen ?',
+    reponse:
+      '[DEMO] Le délai dépend du centre d\'examen et de la formule choisie. La date vous est communiquée avant le paiement.',
+  },
+  {
+    question: 'Puis-je changer de date après ma réservation ?',
+    reponse:
+      '[DEMO] Un report est possible selon les conditions générales de vente, dans un délai à respecter avant le début du stage.',
+  },
+  {
+    question: 'Le prix inclut-il les frais d\'examen ?',
+    reponse: '[DEMO] Le prix affiché inclut la formation et la place d\'examen garantie.',
+  },
+];
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'DrivingSchool',
+    name: '[NOM]',
+    description: "Plateforme d'auto-école spécialisée dans le permis en accéléré.",
+    url: Astro.site?.toString(),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.reponse },
+    })),
+  },
+];
 ---
 
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{nomMarque} — Permis en accelere</title>
-    <meta
-      name="description"
-      content="Reservez votre stage de permis en accelere : dates, moniteur et examen garantis avant de payer."
-    />
-  </head>
-  <body class="bg-slate-50">
-    <main class="flex min-h-screen flex-col items-center justify-center text-center">
-      <h1 class="text-3xl font-bold text-slate-800">{nomMarque}</h1>
-      <p class="mt-2 text-slate-500">Site vitrine en construction. Lot 1 en cours.</p>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title="[NOM] — Permis en accéléré, dates et moniteur garantis avant de payer"
+  description="Réservez votre stage de permis en accéléré : vous connaissez vos dates, votre moniteur et votre date d'examen avant de payer."
+  structuredData={structuredData}
+>
+  <section class="mx-auto max-w-6xl px-4 py-16 text-center">
+    <h1 class="text-3xl font-bold text-slate-800 md:text-5xl">
+      Le permis en accéléré, sans surprise
+    </h1>
+    <p class="mx-auto mt-4 max-w-2xl text-slate-600">
+      Choisissez votre formule, découvrez vos dates, votre moniteur et votre date d'examen —
+      <strong>avant</strong> de payer.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16">
+    <div class="mb-6 flex justify-center gap-2" id="category-tabs">
+      {
+        categories.map((cat, i) => (
+          <button
+            type="button"
+            data-category={cat.key}
+            class:list={[
+              'rounded-full px-4 py-2 text-sm font-medium',
+              i === 0 ? 'bg-slate-800 text-white' : 'bg-white text-slate-600 border',
+            ]}
+          >
+            {cat.label}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+      {
+        formulas.map((formula) => (
+          <div data-category-item={formula.categorie} style={formula.categorie !== 'voiture' ? 'display:none' : undefined}>
+            <FormulaCard formula={formula} />
+          </div>
+        ))
+      }
+    </div>
+
+    <script>
+      const tabs = document.querySelectorAll<HTMLButtonElement>('#category-tabs button');
+      const items = document.querySelectorAll<HTMLElement>('[data-category-item]');
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          tabs.forEach((t) => t.classList.remove('bg-slate-800', 'text-white'));
+          tabs.forEach((t) => t.classList.add('bg-white', 'text-slate-600', 'border'));
+          tab.classList.add('bg-slate-800', 'text-white');
+          tab.classList.remove('bg-white', 'text-slate-600', 'border');
+
+          const category = tab.dataset.category;
+          items.forEach((item) => {
+            item.style.display = item.dataset.categoryItem === category ? '' : 'none';
+          });
+        });
+      });
+    </script>
+  </section>
+
+  <TestimonialBlock />
+
+  <section class="mx-auto max-w-6xl px-4 py-10">
+    <h2 class="mb-6 text-center text-2xl font-bold text-slate-800">Nos villes</h2>
+    <div class="flex flex-wrap justify-center gap-3">
+      {
+        cities.map((city) => (
+          <a
+            href={`/permis-accelere-${city.slug}/`}
+            class="rounded-full border bg-white px-4 py-2 text-sm text-slate-700 hover:bg-slate-100"
+          >
+            {city.nom}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBanner />
+
+  <section class="mx-auto max-w-3xl px-4 py-10">
+    <h2 class="mb-6 text-center text-2xl font-bold text-slate-800">Questions fréquentes</h2>
+    <FaqAccordion items={faqItems} />
+  </section>
+</BaseLayout>

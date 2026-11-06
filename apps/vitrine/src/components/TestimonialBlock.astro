@@ -1,0 +1,43 @@
+---
+// Avis [DEMO] : donnees fictives pour le developpement, a remplacer par de vrais avis clients
+// collectes apres l'examen (voir CLAUDE.md, section "Contenus et originalite").
+const testimonials = [
+  {
+    prenom: 'Lucie [DEMO]',
+    note: 5,
+    texte: '[DEMO] Stage intensif et moniteur a l\'ecoute, j\'ai pu passer mon examen rapidement.',
+  },
+  {
+    prenom: 'Karim [DEMO]',
+    note: 4,
+    texte: '[DEMO] Organisation claire, dates connues a l\'avance, ca change tout pour planifier.',
+  },
+  {
+    prenom: 'Sofia [DEMO]',
+    note: 5,
+    texte: '[DEMO] Equipe reactive, process simple du debut a la fin.',
+  },
+];
+---
+
+<section class="mx-auto max-w-6xl px-4 py-10">
+  <h2 class="mb-2 text-center text-2xl font-bold text-slate-800">Ils nous font confiance</h2>
+  <p class="mb-6 text-center text-xs text-slate-400">
+    Avis de démonstration — à remplacer par de vrais avis clients vérifiés.
+  </p>
+
+  <div class="grid gap-4 md:grid-cols-3">
+    {
+      testimonials.map((t) => (
+        <blockquote class="rounded-lg border bg-white p-4 shadow-sm">
+          <p class="text-sm text-amber-500" aria-hidden="true">
+            {'★'.repeat(t.note)}
+            {'☆'.repeat(5 - t.note)}
+          </p>
+          <p class="mt-2 text-sm text-slate-600">{t.texte}</p>
+          <p class="mt-3 text-sm font-medium text-slate-800">{t.prenom}</p>
+        </blockquote>
+      ))
+    }
+  </div>
+</section>

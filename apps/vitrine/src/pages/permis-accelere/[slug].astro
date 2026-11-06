@@ -1,0 +1,97 @@
+---
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getFormulas } from '../../lib/api.js';
+import type { Formula } from '../../lib/api.js';
+
+export async function getStaticPaths() {
+  const formulas = await getFormulas();
+  return formulas.map((formula) => ({
+    params: { slug: formula.slug },
+    props: { formula },
+  }));
+}
+
+interface Props {
+  formula: Formula;
+}
+
+const { formula } = Astro.props;
+const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
+
+const faqItems = [
+  {
+    question: `Quels sont les prérequis pour la formule ${formula.nom} ?`,
+    reponse:
+      "[DEMO] Être inscrit à l'examen du code de la route ou l'avoir déjà obtenu, selon la formule choisie.",
+  },
+  {
+    question: 'Le moniteur est-il le même pendant tout le stage ?',
+    reponse: '[DEMO] Oui, un moniteur unique vous accompagne du début à la fin du stage.',
+  },
+];
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: formula.nom,
+    description: formula.pointsCles.join(', '),
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'EUR',
+      price: (formula.prix / 100).toFixed(2),
+      availability: 'https://schema.org/InStock',
+    },
+  },
+];
+---
+
+<BaseLayout
+  title={`${formula.nom} — Prix, durée et dates — [NOM]`}
+  description={`Stage ${formula.nom} : ${formula.dureeJours} jour(s), boîte ${formula.boite}, à partir de ${(formula.prix / 100).toFixed(0)} €. Date d'examen garantie avant paiement.`}
+  structuredData={structuredData}
+>
+  <section class="mx-auto max-w-4xl px-4 py-12">
+    {
+      formula.badge && (
+        <span class="mb-3 inline-block rounded bg-amber-100 px-3 py-1 text-sm text-amber-800">
+          {formula.badge}
+        </span>
+      )
+    }
+    <h1 class="text-3xl font-bold text-slate-800">{formula.nom}</h1>
+    <p class="mt-2 text-slate-600">
+      Boîte {formula.boite} · {formula.dureeJours} jour(s)
+      {formula.heuresConduite ? ` · ${formula.heuresConduite}h de conduite` : ''}
+    </p>
+
+    <div class="mt-6 flex items-end gap-4">
+      <p class="text-4xl font-bold text-slate-900">{(formula.prix / 100).toFixed(0)} €</p>
+      {
+        formula.mensualiteAffichee && (
+          <p class="text-slate-500">
+            ou dès {(formula.mensualiteAffichee / 100).toFixed(0)} €/mois
+          </p>
+        )
+      }
+    </div>
+
+    <a
+      href={`${APP_URL}/sessions?formula=${formula.slug}`}
+      class="mt-6 inline-block rounded bg-slate-800 px-6 py-3 font-medium text-white hover:bg-slate-700"
+    >
+      Voir les dates disponibles
+    </a>
+
+    <h2 class="mt-10 text-xl font-semibold text-slate-800">Ce qui est inclus</h2>
+    <ul class="mt-3 space-y-2 text-slate-600">
+      {formula.pointsCles.map((point) => <li>• {point}</li>)}
+    </ul>
+
+    <h2 class="mt-10 text-xl font-semibold text-slate-800">Questions fréquentes</h2>
+    <div class="mt-3">
+      <FaqAccordion items={faqItems} />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const etapes = [
+  {
+    titre: 'Un moniteur unique',
+    description: 'Le même moniteur vous accompagne du début à la fin du stage.',
+  },
+  {
+    titre: 'Un planning connu à l\'avance',
+    description: 'Dates, horaires et points de rendez-vous communiqués avant le paiement.',
+  },
+  {
+    titre: 'Une date d\'examen garantie',
+    description: 'Chaque session est rattachée à un créneau d\'examen réservé.',
+  },
+  {
+    titre: 'Un suivi personnalisé',
+    description: 'Votre progression est suivie dans un livret d\'apprentissage numérique.',
+  },
+];
+---
+
+<BaseLayout
+  title="Notre méthode — [NOM]"
+  description="Découvrez notre méthode pédagogique pour le permis en accéléré : moniteur unique, planning clair, examen garanti."
+>
+  <section class="mx-auto max-w-4xl px-4 py-12">
+    <h1 class="text-3xl font-bold text-slate-800">Notre méthode</h1>
+    <p class="mt-3 text-slate-600">
+      Notre pédagogie repose sur la clarté : vous savez, dès l'inscription, qui sera votre
+      moniteur, quand auront lieu vos leçons et quand aura lieu votre examen.
+    </p>
+
+    <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+      {
+        etapes.map((etape) => (
+          <div class="rounded border bg-white p-4">
+            <h2 class="font-semibold text-slate-800">{etape.titre}</h2>
+            <p class="mt-1 text-sm text-slate-600">{etape.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,46 @@
+---
+import type { Formula } from '../lib/api.js';
+
+interface Props {
+  formula: Formula;
+}
+
+const { formula } = Astro.props;
+const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
+---
+
+<article class="flex flex-col rounded-lg border bg-white p-5 shadow-sm">
+  {
+    formula.badge && (
+      <span class="mb-2 inline-block w-fit rounded bg-amber-100 px-2 py-0.5 text-xs text-amber-800">
+        {formula.badge}
+      </span>
+    )
+  }
+
+  <h3 class="text-lg font-semibold text-slate-800">{formula.nom}</h3>
+  <p class="text-sm text-slate-500">
+    Boite {formula.boite} · {formula.dureeJours} jour(s)
+    {formula.heuresConduite ? ` · ${formula.heuresConduite}h de conduite` : ''}
+  </p>
+
+  <p class="mt-3 text-2xl font-bold text-slate-900">{(formula.prix / 100).toFixed(0)} €</p>
+  {
+    formula.mensualiteAffichee && (
+      <p class="text-sm text-slate-500">
+        dès {(formula.mensualiteAffichee / 100).toFixed(0)} €/mois
+      </p>
+    )
+  }
+
+  <ul class="mt-3 flex-1 space-y-1 text-sm text-slate-600">
+    {formula.pointsCles.map((point) => <li>• {point}</li>)}
+  </ul>
+
+  <a
+    href={`${APP_URL}/sessions?formula=${formula.slug}`}
+    class="mt-4 inline-block rounded bg-slate-800 px-4 py-2 text-center text-sm font-medium text-white hover:bg-slate-700"
+  >
+    Voir les dates
+  </a>
+</article>

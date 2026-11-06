@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<BaseLayout title={`${post.data.title} — [NOM]`} description={post.data.description}>
+  <article class="mx-auto max-w-2xl px-4 py-12">
+    <h1 class="text-3xl font-bold text-slate-800">{post.data.title}</h1>
+    <p class="mt-2 text-xs text-slate-400">
+      {post.data.publishDate.toLocaleDateString('fr-FR')} · {post.data.author}
+    </p>
+    <div class="markdown-content mt-6 text-slate-700">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .markdown-content :global(h2) {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+  }
+  .markdown-content :global(p) {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+  .markdown-content :global(ul),
+  .markdown-content :global(ol) {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+  }
+  .markdown-content :global(li) {
+    margin-bottom: 0.25rem;
+  }
+</style>

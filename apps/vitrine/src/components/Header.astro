@@ -1,0 +1,40 @@
+---
+const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
+
+const links = [
+  { href: '/permis-accelere/', label: 'Formules' },
+  { href: '/financement/', label: 'Financement' },
+  { href: '/methode/', label: 'Methode' },
+  { href: '/auto-ecole/', label: 'Agences' },
+  { href: '/blog/', label: 'Blog' },
+  { href: '/faq/', label: 'FAQ' },
+];
+---
+
+<header class="sticky top-0 z-40 border-b bg-white">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+    <a href="/" class="text-xl font-bold text-slate-800">[NOM]</a>
+
+    <nav class="hidden items-center gap-5 text-sm text-slate-600 md:flex">
+      {
+        links.map((link) => (
+          <a href={link.href} class="hover:text-slate-900">
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href={`${APP_URL}/login`} class="text-sm text-slate-600 hover:text-slate-900">
+        Connexion
+      </a>
+      <a
+        href={`${APP_URL}/inscription`}
+        class="rounded bg-slate-800 px-4 py-2 text-sm text-white hover:bg-slate-700"
+      >
+        Je m&apos;inscris
+      </a>
+    </div>
+  </div>
+</header>

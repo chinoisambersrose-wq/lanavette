@@ -47,34 +47,48 @@ Référence fonctionnelle : `docs/CAHIER_DES_CHARGES.md`.
 
 ## Lot 2 · Réservation, paiement et espace élève
 
-- [ ] `POST /bookings` : décrément atomique de `placesRestantes`, statut `en_attente_paiement`, `expireAt` = maintenant + 15 min
-- [ ] Tâche planifiée : expiration des réservations non payées et libération des places
-- [ ] `POST /bookings/:id/checkout` : création d'une session Stripe Checkout
-- [ ] `POST /webhooks/payments` : vérification de signature, idempotence, passage à `confirmee`, création du `payment`
-- [ ] Facture PDF générée à la confirmation
-- [ ] Parcours élève : formule → ville / point de RDV / boîte → sessions → compte → informations → paiement → confirmation
-- [ ] Espace élève : tableau de bord, planning, documents (upload vers R2/S3, URL signées), paiements et factures
-- [ ] Report et annulation selon règles de configuration, exception admin tracée
-- [ ] Paiement en plusieurs fois (Alma) derrière un drapeau de configuration
+- [x] `POST /bookings` : décrément atomique de `placesRestantes`, statut `en_attente_paiement`, `expireAt` = maintenant + 15 min
+- [x] Tâche planifiée : expiration des réservations non payées et libération des places
+- [x] `POST /bookings/:id/checkout` : création d'une session Stripe Checkout
+- [x] `POST /webhooks/payments` : vérification de signature, idempotence, passage à `confirmee`, création du `payment`
+- [x] Facture PDF générée à la confirmation (numérotation continue, générée à la demande au téléchargement)
+- [x] Parcours élève : formule → ville / point de RDV / boîte → sessions → compte → paiement → confirmation.
+  Version simplifiée : pas d'étape dédiée de saisie des informations détaillées (NEPH, date de
+  naissance, adresse) avant paiement — à ajouter si besoin, le modèle `studentProfiles` le prévoit déjà.
+- [x] Espace élève : tableau de bord (prochain stage, liste des réservations avec annulation/paiement),
+  documents (upload R2/S3, URL signées), paiements et factures. Version simplifiée : pas de planning
+  détaillé jour par jour avec carte des points de RDV.
+- [x] Report et annulation selon règles de configuration, exception admin tracée
+- [x] Paiement en plusieurs fois (Alma) derrière un drapeau de configuration (`ALMA_ENABLED`, gating
+  fonctionnel ; pas d'intégration réelle Alma — aucun compte/SDK disponible dans cet environnement)
 
 ### Tests obligatoires
-- [ ] Deux réservations simultanées sur la dernière place : une seule réussit
-- [ ] Réservation expirée : place libérée
-- [ ] Webhook rejoué deux fois : un seul paiement enregistré
-- [ ] Webhook à signature invalide : rejeté
+- [x] Deux réservations simultanées sur la dernière place : une seule réussit
+- [x] Réservation expirée : place libérée
+- [x] Webhook rejoué deux fois : un seul paiement enregistré
+- [x] Webhook à signature invalide : rejeté
 
-**Validation :** une réservation payée de bout en bout en mode test.
+**Validation :** une réservation payée de bout en bout en mode test — logique de bout en bout
+validée (réservation → webhook → confirmation), mais non rejouée avec de vraies clés Stripe
+(aucun compte Stripe configuré dans cet environnement). À refaire avec de vraies clés de test
+avant la mise en prod.
 
 ## Lot 3 · Site vitrine (Astro)
 
-- [ ] Layout, en-tête (Connexion / Je m'inscris), pied de page, composants : carte de formule, FAQ, avis, CTA
-- [ ] Pages : accueil, toutes les formules, page formule dynamique, permis auto / manuel, page ville dynamique, agences (carte), financement, méthode, FAQ, devenir moniteur, pages légales
-- [ ] Données (formules, villes, prochaines sessions) lues depuis l'API au build
-- [ ] SEO : title / description uniques, Open Graph, sitemap, robots, canoniques
-- [ ] Données structurées JSON-LD : `DrivingSchool`, `Product` + `Offer`, `FAQPage`
-- [ ] Bandeau cookies, GA4 via GTM chargé après consentement
-- [ ] Lighthouse mobile ≥ 90 (performance et SEO) sur accueil, page formule, page ville
-- [ ] Blog (collections de contenu Astro en Markdown)
+- [x] Layout, en-tête (Connexion / Je m'inscris), pied de page, composants : carte de formule, FAQ, avis, CTA
+- [x] Pages : accueil, toutes les formules, page formule dynamique, permis auto / manuel, page ville dynamique, agences, financement, méthode, FAQ, devenir moniteur, pages légales.
+  Page agences : liste des points de RDV par ville ; carte interactive non intégrée (nécessite une
+  clé Mapbox ou Google Maps, non disponible dans cet environnement).
+- [x] Données (formules, villes, prochaines sessions) lues depuis l'API au build — vérifié avec l'API
+  et des données `[DEMO]` en local (build complet des 22 pages réussi)
+- [x] SEO : title / description uniques par page, Open Graph (title/description/url ; pas d'image
+  `og:image` fournie pour le moment), sitemap (`@astrojs/sitemap`), `robots.txt`, canoniques
+- [x] Données structurées JSON-LD : `DrivingSchool`, `Product` + `Offer`, `FAQPage`
+- [x] Bandeau cookies, GA4 via GTM chargé après consentement (GTM_ID factice à remplacer avant mise en prod)
+- [x] Lighthouse mobile ≥ 90 (performance et SEO) sur accueil, page formule, page ville — 100/100 sur
+  les deux critères pour les trois pages (build local, `astro preview`, throttling simulé). À
+  revérifier en conditions réelles une fois le site déployé (CDN, images réelles, polices, GTM actif).
+- [x] Blog (collections de contenu Astro en Markdown, 2 articles `[DEMO]`)
 
 ## Lot 4 · Espace moniteur et notifications
 

@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const options = [
+  { titre: 'Carte bancaire comptant', description: 'Paiement en une fois, sécurisé par Stripe.' },
+  { titre: 'Virement SEPA', description: 'Confirmation différée de quelques jours.' },
+  {
+    titre: 'Paiement en plusieurs fois',
+    description: '3 à 4 fois sans frais, sous conditions (selon disponibilité).',
+  },
+  {
+    titre: 'CPF (Mon Compte Formation)',
+    description:
+      '[DEMO] Sous conditions d\'éligibilité. Renseignez-vous sur moncompteformation.gouv.fr avant de réserver.',
+  },
+  { titre: 'Paiement en agence', description: 'Sur rendez-vous, avec justificatif.' },
+];
+---
+
+<BaseLayout
+  title="Financer son permis — [NOM]"
+  description="Les solutions de financement pour votre stage de permis accéléré : comptant, plusieurs fois, CPF."
+>
+  <section class="mx-auto max-w-4xl px-4 py-12">
+    <h1 class="text-3xl font-bold text-slate-800">Financer votre permis</h1>
+
+    <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+      {
+        options.map((option) => (
+          <div class="rounded border bg-white p-4">
+            <h2 class="font-semibold text-slate-800">{option.titre}</h2>
+            <p class="mt-1 text-sm text-slate-600">{option.description}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <section class="mt-12 rounded-lg border bg-white p-6">
+      <h2 class="text-xl font-semibold text-slate-800">Simulateur de mensualités</h2>
+      <p class="mt-1 text-sm text-slate-500">Estimation simple, hors frais de crédit éventuels.</p>
+
+      <div class="mt-4 flex flex-wrap items-end gap-4">
+        <label class="text-sm">
+          Montant du stage (€)
+          <input
+            id="sim-montant"
+            type="number"
+            value="1500"
+            min="0"
+            class="mt-1 block w-32 rounded border px-2 py-1"
+          />
+        </label>
+        <label class="text-sm">
+          Nombre de mensualités
+          <input
+            id="sim-mois"
+            type="number"
+            value="10"
+            min="1"
+            max="24"
+            class="mt-1 block w-24 rounded border px-2 py-1"
+          />
+        </label>
+        <p class="text-lg font-semibold text-slate-800">
+          soit <span id="sim-resultat">150.00</span> €/mois
+        </p>
+      </div>
+    </section>
+
+    <script>
+      const montantInput = document.getElementById('sim-montant') as HTMLInputElement;
+      const moisInput = document.getElementById('sim-mois') as HTMLInputElement;
+      const resultat = document.getElementById('sim-resultat');
+
+      function recalculer() {
+        const montant = Number(montantInput.value) || 0;
+        const mois = Number(moisInput.value) || 1;
+        if (resultat) resultat.textContent = (montant / mois).toFixed(2);
+      }
+
+      montantInput?.addEventListener('input', recalculer);
+      moisInput?.addEventListener('input', recalculer);
+    </script>
+  </section>
+</BaseLayout>

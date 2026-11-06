@@ -10,6 +10,7 @@ export interface PaymentDocument extends Document {
   statut: PaymentStatus;
   prestataire: string;
   referencePrestataire?: string;
+  numeroFacture?: string;
   echeance?: Date;
   payeLe?: Date;
   createdAt: Date;
@@ -23,6 +24,7 @@ const paymentSchema = new Schema<PaymentDocument>(
     statut: { type: String, enum: PAYMENT_STATUSES, default: 'en_attente' },
     prestataire: { type: String, required: true },
     referencePrestataire: { type: String, unique: true, sparse: true },
+    numeroFacture: { type: String, unique: true, sparse: true },
     echeance: { type: Date },
     payeLe: { type: Date },
   },

@@ -12,6 +12,18 @@ const envSchema = z.object({
   APP_ORIGIN: z.string().default('http://localhost:5173'),
   VITRINE_ORIGIN: z.string().default('http://localhost:4321'),
   BOOKING_HOLD_DURATION_MINUTES: z.coerce.number().int().positive().default(15),
+  CANCELLATION_FREE_DAYS_BEFORE_START: z.coerce.number().int().nonnegative().default(7),
+  BOOKING_EXPIRATION_CRON: z.string().default('*/1 * * * *'),
+  STRIPE_SECRET_KEY: z.string().optional(),
+  STRIPE_WEBHOOK_SECRET: z.string().optional(),
+  STRIPE_SUCCESS_URL: z.string().default('http://localhost:5173/paiement/succes'),
+  STRIPE_CANCEL_URL: z.string().default('http://localhost:5173/paiement/annule'),
+  ALMA_ENABLED: z.coerce.boolean().default(false),
+  S3_ENDPOINT: z.string().optional(),
+  S3_REGION: z.string().default('auto'),
+  S3_BUCKET: z.string().optional(),
+  S3_ACCESS_KEY_ID: z.string().optional(),
+  S3_SECRET_ACCESS_KEY: z.string().optional(),
 });
 
 function loadEnv() {

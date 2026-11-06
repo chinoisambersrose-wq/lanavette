@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCities, getMeetingPoints } from '../lib/api.js';
+
+const cities = await getCities();
+const meetingPointsByCity = await Promise.all(
+  cities.map(async (city) => ({ city, points: await getMeetingPoints(city.slug) })),
+);
+---
+
+<BaseLayout
+  title="Nos agences et points de rendez-vous — [NOM]"
+  description="Retrouvez toutes nos agences et points de rendez-vous par ville."
+>
+  <section class="mx-auto max-w-6xl px-4 py-12">
+    <h1 class="text-3xl font-bold text-slate-800">Nos agences</h1>
+    <p class="mt-2 text-sm text-slate-400">
+      Carte interactive à venir (nécessite une clé Mapbox ou Google Maps) — liste des points de
+      RDV en attendant.
+    </p>
+
+    <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+      {
+        meetingPointsByCity.map(({ city, points }) => (
+          <div>
+            <h2 class="mb-2 text-lg font-semibold text-slate-800">{city.nom}</h2>
+            {points.length > 0 ? (
+              <ul class="space-y-2">
+                {points.map((point) => (
+                  <li class="rounded border bg-white p-3 text-sm">
+                    <p class="font-medium text-slate-800">{point.nom}</p>
+                    <p class="text-slate-600">{point.adresse}</p>
+                    <p class="text-slate-400">Boîte : {point.boites.join(', ')}</p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="text-sm text-slate-500">Aucun point de RDV pour le moment.</p>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

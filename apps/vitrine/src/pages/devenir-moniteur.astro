@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Devenir moniteur — [NOM]"
+  description="Rejoignez notre équipe de moniteurs : candidature en ligne."
+>
+  <section class="mx-auto max-w-2xl px-4 py-12">
+    <h1 class="text-3xl font-bold text-slate-800">Devenir moniteur</h1>
+    <p class="mt-3 text-slate-600">
+      Vous êtes enseignant de la conduite (BEPECASER ou titre professionnel équivalent) ?
+      Rejoignez notre équipe.
+    </p>
+
+    <form id="candidature-form" class="mt-8 space-y-4 rounded-lg border bg-white p-6">
+      <div class="grid grid-cols-2 gap-4">
+        <label class="text-sm">
+          Prénom
+          <input required name="prenom" class="mt-1 w-full rounded border px-3 py-2" />
+        </label>
+        <label class="text-sm">
+          Nom
+          <input required name="nom" class="mt-1 w-full rounded border px-3 py-2" />
+        </label>
+      </div>
+      <label class="block text-sm">
+        Email
+        <input required type="email" name="email" class="mt-1 w-full rounded border px-3 py-2" />
+      </label>
+      <label class="block text-sm">
+        Téléphone
+        <input required name="telephone" class="mt-1 w-full rounded border px-3 py-2" />
+      </label>
+      <label class="block text-sm">
+        Message (expérience, ville souhaitée...)
+        <textarea name="message" rows="4" class="mt-1 w-full rounded border px-3 py-2"></textarea>
+      </label>
+
+      <button type="submit" class="rounded bg-slate-800 px-5 py-2 text-white hover:bg-slate-700">
+        Envoyer ma candidature
+      </button>
+
+      <p id="candidature-confirmation" class="hidden rounded bg-green-50 p-3 text-sm text-green-700">
+        Merci, votre candidature a été enregistrée. Notre équipe vous recontacte rapidement.
+      </p>
+    </form>
+  </section>
+</BaseLayout>
+
+<script>
+  // Formulaire statique de demonstration : aucune API de recrutement n'existe encore cote back-office.
+  // A connecter a une vraie route (ex. POST /api/v1/candidatures) ou a un service d'emailing avant mise en prod.
+  const form = document.getElementById('candidature-form');
+  const confirmation = document.getElementById('candidature-confirmation');
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    confirmation?.classList.remove('hidden');
+    (form as HTMLFormElement).reset();
+  });
+</script>

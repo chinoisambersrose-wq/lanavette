@@ -25,6 +25,9 @@
     "prettier": "^3.3.3",
     "typescript": "^5.6.3"
   },
+  "overrides": {
+    "@astrojs/astro2tsx": "0.1.2"
+  },
   "lint-staged": {
     "*.{ts,tsx}": [
       "eslint --fix --max-warnings=0"

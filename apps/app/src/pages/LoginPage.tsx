@@ -1,11 +1,11 @@
 import { useState, type FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext.js';
 import { ApiClientError } from '../lib/apiClient.js';
 
 export default function LoginPage(): JSX.Element {
-  const { login } = useAuth();
-  const navigate = useNavigate();
+  const { login, user } = useAuth();
+  const [searchParams] = useSearchParams();
   const [email, setEmail] = useState('');
   const [motDePasse, setMotDePasse] = useState('');
   const [error, setError] = useState<string | undefined>(undefined);
@@ -18,7 +18,6 @@ export default function LoginPage(): JSX.Element {
 
     try {
       await login(email, motDePasse);
-      navigate('/admin');
     } catch (err) {
       setError(err instanceof ApiClientError ? err.message : 'Connexion impossible');
     } finally {
@@ -26,9 +25,14 @@ export default function LoginPage(): JSX.Element {
     }
   }
 
+  if (user) {
+    const redirect = searchParams.get('redirect');
+    return <Navigate to={redirect || (user.role === 'admin' ? '/admin' : '/mon-compte')} replace />;
+  }
+
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-50">
-      <form onSubmit={handleSubmit} className="w-full max-w-sm rounded-lg bg-white p-6 shadow-sm">
+    <div className="mx-auto max-w-sm">
+      <form onSubmit={handleSubmit} className="rounded-lg bg-white p-6 shadow-sm">
         <h1 className="mb-4 text-xl font-semibold text-slate-800">Connexion</h1>
 
         {error && (
@@ -67,6 +71,6 @@ export default function LoginPage(): JSX.Element {
           {isSubmitting ? 'Connexion...' : 'Se connecter'}
         </button>
       </form>
-    </main>
+    </div>
   );
 }

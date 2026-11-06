@@ -9,6 +9,7 @@ import {
 import { Schema, model, type Document, type Types } from 'mongoose';
 
 export interface StudentDocument {
+  _id: Types.ObjectId;
   type: DocumentType;
   url: string;
   statut: DocumentStatus;
@@ -26,14 +27,11 @@ export interface StudentProfileDocument extends Document {
   updatedAt: Date;
 }
 
-const studentDocumentSchema = new Schema<StudentDocument>(
-  {
-    type: { type: String, enum: DOCUMENT_TYPES, required: true },
-    url: { type: String, required: true },
-    statut: { type: String, enum: DOCUMENT_STATUSES, default: 'recu' },
-  },
-  { _id: false },
-);
+const studentDocumentSchema = new Schema<StudentDocument>({
+  type: { type: String, enum: DOCUMENT_TYPES, required: true },
+  url: { type: String, required: true },
+  statut: { type: String, enum: DOCUMENT_STATUSES, default: 'recu' },
+});
 
 const studentProfileSchema = new Schema<StudentProfileDocument>(
   {

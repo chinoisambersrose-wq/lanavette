@@ -1,0 +1,19 @@
+---
+import FormulaCard from '../../components/FormulaCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getFormulas } from '../../lib/api.js';
+
+const formulas = await getFormulas();
+---
+
+<BaseLayout
+  title="Toutes nos formules de permis accéléré — [NOM]"
+  description="Comparez nos formules de stage de permis accéléré : durée, heures de conduite, prix et mensualité."
+>
+  <section class="mx-auto max-w-6xl px-4 py-12">
+    <h1 class="mb-8 text-center text-3xl font-bold text-slate-800">Nos formules</h1>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+      {formulas.map((formula) => <FormulaCard formula={formula} />)}
+    </div>
+  </section>
+</BaseLayout>

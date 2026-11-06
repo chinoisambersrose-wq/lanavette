@@ -1,0 +1,16 @@
+---
+const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
+---
+
+<section class="mx-auto my-10 max-w-6xl rounded-lg bg-slate-800 px-6 py-10 text-center text-white">
+  <h2 class="text-2xl font-bold">Prêt à réserver votre stage ?</h2>
+  <p class="mt-2 text-slate-200">
+    Choisissez votre formule, votre moniteur et votre date d'examen avant de payer.
+  </p>
+  <a
+    href={`${APP_URL}/inscription`}
+    class="mt-5 inline-block rounded bg-white px-6 py-3 font-medium text-slate-800 hover:bg-slate-100"
+  >
+    Je m&apos;inscris
+  </a>
+</section>

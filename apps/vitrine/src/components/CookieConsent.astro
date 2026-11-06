@@ -1,0 +1,66 @@
+---
+// Bandeau de consentement cookies. GA4/GTM n'est charge qu'apres acceptation (RGPD).
+// GTM_ID est un identifiant factice : a remplacer avant mise en production.
+const GTM_ID = 'GTM-XXXXXXX';
+---
+
+<div
+  id="cookie-banner"
+  class="fixed inset-x-0 bottom-0 z-50 hidden border-t bg-white p-4 shadow-lg"
+  role="dialog"
+  aria-label="Consentement aux cookies"
+>
+  <div class="mx-auto flex max-w-4xl flex-col items-center justify-between gap-3 sm:flex-row">
+    <p class="text-sm text-slate-600">
+      Nous utilisons des cookies de mesure d'audience pour ameliorer le site. Vous pouvez accepter
+      ou refuser leur depot. Voir notre
+      <a href="/confidentialite/" class="underline">politique de confidentialite</a>.
+    </p>
+    <div class="flex gap-2">
+      <button
+        id="cookie-refuse"
+        class="rounded border border-slate-300 px-4 py-2 text-sm text-slate-700"
+      >
+        Refuser
+      </button>
+      <button id="cookie-accept" class="rounded bg-slate-800 px-4 py-2 text-sm text-white">
+        Accepter
+      </button>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ GTM_ID }}>
+  const STORAGE_KEY = 'cookie-consent';
+  const banner = document.getElementById('cookie-banner');
+
+  function loadGtm() {
+    if (!GTM_ID || GTM_ID.includes('XXXX') || window.__gtmLoaded) return;
+    window.__gtmLoaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`;
+    document.head.appendChild(script);
+  }
+
+  const consent = localStorage.getItem(STORAGE_KEY);
+
+  if (consent === 'accepted') {
+    loadGtm();
+  } else if (consent !== 'refused') {
+    banner?.classList.remove('hidden');
+  }
+
+  document.getElementById('cookie-accept')?.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY, 'accepted');
+    banner?.classList.add('hidden');
+    loadGtm();
+  });
+
+  document.getElementById('cookie-refuse')?.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY, 'refused');
+    banner?.classList.add('hidden');
+  });
+</script>

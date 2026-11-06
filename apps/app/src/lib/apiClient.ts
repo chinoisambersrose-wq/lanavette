@@ -32,7 +32,7 @@ async function rawRequest<T>(path: string, init: RequestInit): Promise<T> {
     ...init,
     credentials: 'include',
     headers: {
-      ...(init.body ? { 'Content-Type': 'application/json' } : {}),
+      ...(typeof init.body === 'string' ? { 'Content-Type': 'application/json' } : {}),
       ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
       ...init.headers,
     },
@@ -88,4 +88,26 @@ export const apiClient = {
   patch: <T>(path: string, body?: unknown) =>
     apiRequest<T>(path, { method: 'PATCH', body: body ? JSON.stringify(body) : undefined }),
   delete: <T>(path: string) => apiRequest<T>(path, { method: 'DELETE' }),
+  upload: <T>(path: string, formData: FormData) =>
+    apiRequest<T>(path, { method: 'POST', body: formData }),
 };
+
+/** Telecharge un fichier prive (facture...) en injectant le jeton d'acces, puis declenche l'enregistrement. */
+export async function downloadFile(path: string, filename: string): Promise<void> {
+  const response = await fetch(`${API_URL}${path}`, {
+    credentials: 'include',
+    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
+  });
+
+  if (!response.ok) {
+    throw new ApiClientError(response.status, 'DOWNLOAD_FAILED', 'Telechargement impossible');
+  }
+
+  const blob = await response.blob();
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
