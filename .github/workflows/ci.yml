@@ -26,5 +26,13 @@ jobs:
       - name: Verifier le formatage
         run: npm run format:check
 
+      # apps/vitrine est exclu : son build appelle l'API au build (donnees du catalogue) et
+      # necessite donc une base MongoDB et une API demarrees, non montees dans cette CI.
+      - name: Build (shared, api, app)
+        run: |
+          npm run build -w packages/shared
+          npm run build -w apps/api
+          npm run build -w apps/app
+
       - name: Tests
         run: npm test

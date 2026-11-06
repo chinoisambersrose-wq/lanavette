@@ -118,8 +118,14 @@ ici (pas d'environnement de préproduction disponible) ; logique vérifiée par 
 
 ## Lot 5 · Pilote et lancement
 
-- [ ] Déploiement production : vitrine et app (Vercel), API (VPS Docker + Nginx ou Render), Atlas UE, Cloudflare
-- [ ] Sauvegardes quotidiennes de la base + test de restauration
+- [ ] Déploiement production : vitrine et app (Vercel), API (VPS Docker + Nginx ou Render), Atlas UE, Cloudflare.
+  Infra préparée en code (voir `docs/DEPLOIEMENT.md`) : `Dockerfile` API, `docker-compose` +
+  config Nginx dans `deploy/`, `vercel.json` pour vitrine/app, workflow GitHub Actions qui publie
+  l'image Docker sur ghcr.io. Rien n'a été réellement déployé (pas de comptes Vercel/Atlas/VPS
+  disponibles dans cet environnement) — à faire par le porteur du projet en suivant le guide.
+- [ ] Sauvegardes quotidiennes de la base + test de restauration. Scripts prêts
+  (`deploy/backup/backup-mongo.sh`, `deploy/backup/restore-test.sh`), en complément des
+  sauvegardes automatiques à activer dans Atlas — aucun des deux n'a pu être exécuté ici.
 - [ ] Clés Stripe en mode live, webhooks de production configurés
 - [ ] Ouverture dans la première ville, suivi des premières réservations
 - [ ] Collecte automatique des avis après examen

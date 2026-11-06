@@ -19,3 +19,8 @@ Chaque app a un `.env.example` à copier en `.env` avant de démarrer.
 
 `research/` contient des données de veille concurrentielle à usage interne uniquement
 (jamais à copier dans le produit — voir la section « Contenus et originalité » de `CLAUDE.md`).
+
+## Déploiement
+
+Voir `docs/DEPLOIEMENT.md` : vitrine et app sur Vercel, API en Docker derrière Nginx sur un VPS
+(image publiée automatiquement via `.github/workflows/deploy-api.yml`), base MongoDB Atlas.

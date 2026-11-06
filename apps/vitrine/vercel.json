@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd ../.. && npm run build -w packages/shared && npm run build -w apps/vitrine",
+  "installCommand": "cd ../.. && npm ci --ignore-scripts",
+  "outputDirectory": "dist",
+  "framework": "astro"
+}

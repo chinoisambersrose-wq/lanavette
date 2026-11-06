@@ -1,0 +1,59 @@
+name: Deploy API
+
+# Construit l'image Docker de l'API et la publie sur GitHub Container Registry a chaque push
+# sur main. Ne necessite aucun secret : GITHUB_TOKEN suffit pour publier sur ghcr.io.
+#
+# Le deploiement effectif sur le VPS (pull + redemarrage) est une etape manuelle documentee dans
+# deploy/README.md, sauf si les secrets VPS_HOST / VPS_SSH_KEY / VPS_USER sont configures
+# (Settings > Secrets and variables > Actions) : dans ce cas l'etape "Deployer sur le VPS" se
+# connecte en SSH et relance les conteneurs automatiquement.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/api/**'
+      - 'packages/shared/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/deploy-api.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Connexion a GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Construire et publier l'image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/api/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}/api:latest
+            ghcr.io/${{ github.repository }}/api:${{ github.sha }}
+
+      - name: Deployer sur le VPS
+        if: ${{ vars.VPS_HOST != '' }}
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ vars.VPS_HOST }}
+          username: ${{ vars.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /opt/plateforme
+            docker compose pull api
+            docker compose up -d api
