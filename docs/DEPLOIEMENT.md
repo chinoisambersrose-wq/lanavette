@@ -50,28 +50,37 @@ Aucun secret n'est requis pour cette partie (le `GITHUB_TOKEN` suffit).
 
 ### VPS
 
-1. Provisionner un petit VPS (ex. 2 Go de RAM), installer Docker + Docker Compose.
-2. Copier sur le VPS, dans `/opt/plateforme/` :
+Important : sur ce VPS, Docker + Docker Compose sont déjà installés et le serveur héberge déjà
+d'autres sites en production, avec un nginx **système** (hors Docker) propriétaire des ports
+80/443. `deploy/docker-compose.yml` ne lance donc **pas** de conteneur nginx : l'API publie son
+port directement sur le host (`4100` par défaut — `4000` y était déjà pris par un autre service),
+et on branche le nginx système existant dessus une fois un domaine choisi.
+
+1. Copier sur le VPS, dans `/opt/plateforme/` :
    - `deploy/docker-compose.yml`
-   - `deploy/nginx/api.conf` (remplacer `api.exemple.fr` par le vrai sous-domaine une fois choisi)
    - `deploy/.env.example` → copié en `.env`, rempli avec les vraies valeurs de production
      (jamais commité)
-3. Pointer le sous-domaine (ex. `api.votredomaine.fr`) vers l'IP du VPS via Cloudflare DNS.
-4. Premier certificat TLS (certbot en mode webroot, le bloc `443` de `nginx/api.conf` étant
-   commenté la première fois) :
-   ```bash
-   docker compose up -d nginx
-   certbot certonly --webroot -w /var/www/certbot -d api.votredomaine.fr
-   # reactiver le bloc 443 dans nginx/api.conf, puis :
-   docker compose restart nginx
-   ```
-5. Se connecter au registre et lancer les conteneurs :
+2. Se connecter au registre et lancer le conteneur :
    ```bash
    docker login ghcr.io -u <compte> -p <token GitHub avec droit read:packages>
    docker compose pull
    docker compose up -d
    ```
-6. Planifier le renouvellement du certificat (cron `certbot renew` deux fois par mois) et la
+   L'API est alors joignable sur `http://<ip-du-vps>:4100` (accès direct, sans HTTPS) — suffisant
+   pour tester en attendant un nom de domaine.
+3. Une fois un domaine choisi et pointé vers l'IP du VPS (Cloudflare DNS, sous-domaine type
+   `api.votredomaine.fr`) :
+   ```bash
+   cp deploy/nginx/api.conf /etc/nginx/sites-available/api-lanavette
+   # remplacer api.exemple.fr par le vrai sous-domaine dans ce fichier,
+   # et commenter le bloc 443 le temps d'obtenir le premier certificat
+   ln -s /etc/nginx/sites-available/api-lanavette /etc/nginx/sites-enabled/
+   nginx -t && systemctl reload nginx
+   certbot certonly --webroot -w /var/www/certbot -d api.votredomaine.fr
+   # reactiver le bloc 443 dans le fichier, puis :
+   nginx -t && systemctl reload nginx
+   ```
+4. Planifier le renouvellement du certificat (cron `certbot renew` deux fois par mois) et la
    sauvegarde (`deploy/backup/backup-mongo.sh`, voir le cron dans ce fichier).
 
 ### Déploiement automatique (optionnel)
