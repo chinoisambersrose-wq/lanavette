@@ -126,5 +126,107 @@ export const openApiSpec = {
         },
       },
     },
+    '/sessions/{id}/waitlist': {
+      post: {
+        summary: "Inscription a la liste d'attente d'une session",
+        tags: ['Eleve'],
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
+        responses: { '201': { description: 'Inscrit' }, '409': { description: 'Deja inscrit' } },
+      },
+    },
+    '/instructor/sessions': {
+      get: {
+        summary: 'Sessions du moniteur connecte',
+        tags: ['Moniteur'],
+        security: [{ bearerAuth: [] }],
+        responses: { '200': { description: 'Liste des sessions' } },
+      },
+    },
+    '/instructor/sessions/{id}/students': {
+      get: {
+        summary: "Fiche des eleves d'une session (coordonnees, formule...)",
+        tags: ['Moniteur'],
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
+        responses: { '200': { description: 'Liste des eleves' } },
+      },
+    },
+    '/instructor/bookings/{bookingId}/lessons': {
+      get: {
+        summary: "Historique des lecons d'une reservation",
+        tags: ['Moniteur'],
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: 'bookingId', in: 'path', required: true, schema: { type: 'string' } }],
+        responses: { '200': { description: 'Liste des lecons' } },
+      },
+      post: {
+        summary: 'Saisie apres lecon (heures, competences, commentaire, presence)',
+        tags: ['Moniteur'],
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: 'bookingId', in: 'path', required: true, schema: { type: 'string' } }],
+        responses: { '201': { description: 'Lecon enregistree' } },
+      },
+    },
+    '/instructor/bookings/{bookingId}/avis': {
+      post: {
+        summary: "Avis de fin de stage pret/pas_pret (alerte admin si pas_pret)",
+        tags: ['Moniteur'],
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: 'bookingId', in: 'path', required: true, schema: { type: 'string' } }],
+        responses: { '200': { description: 'Avis enregistre' } },
+      },
+    },
+    '/instructor/availability': {
+      get: {
+        summary: 'Disponibilites declarees par le moniteur',
+        tags: ['Moniteur'],
+        security: [{ bearerAuth: [] }],
+        responses: { '200': { description: 'Liste des periodes' } },
+      },
+      put: {
+        summary: 'Remplace les disponibilites du moniteur',
+        tags: ['Moniteur'],
+        security: [{ bearerAuth: [] }],
+        responses: { '200': { description: 'Disponibilites mises a jour' } },
+      },
+    },
+    '/instructor/hours-summary': {
+      get: {
+        summary: 'Recapitulatif mensuel des heures enseignees',
+        tags: ['Moniteur'],
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: 'month', in: 'query', required: true, schema: { type: 'string', example: '2026-01' } }],
+        responses: { '200': { description: 'Total des heures' } },
+      },
+    },
+    '/instructor/hours-summary/export.pdf': {
+      get: {
+        summary: 'Recapitulatif mensuel des heures en PDF',
+        tags: ['Moniteur'],
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: 'month', in: 'query', required: true, schema: { type: 'string', example: '2026-01' } }],
+        responses: { '200': { description: 'PDF' } },
+      },
+    },
+    '/admin/exam-results': {
+      get: { summary: "Liste des resultats d'examen", tags: ['Admin'], security: [{ bearerAuth: [] }], responses: { '200': { description: 'Liste' } } },
+      post: { summary: "Saisie admis/ajourne/absent, cloture la reservation", tags: ['Admin'], security: [{ bearerAuth: [] }], responses: { '201': { description: 'Resultat enregistre' } } },
+    },
+    '/admin/exam-results/stats': {
+      get: {
+        summary: 'Statistiques de reussite par formule, ville ou moniteur',
+        tags: ['Admin'],
+        security: [{ bearerAuth: [] }],
+        parameters: [{ name: 'groupBy', in: 'query', schema: { type: 'string', enum: ['formula', 'city', 'instructor'] } }],
+        responses: { '200': { description: 'Statistiques' } },
+      },
+    },
+    '/admin/payments': {
+      get: { summary: 'Liste des paiements', tags: ['Admin'], security: [{ bearerAuth: [] }], responses: { '200': { description: 'Liste' } } },
+    },
+    '/admin/payments/export.csv': {
+      get: { summary: 'Export comptable CSV des paiements', tags: ['Admin'], security: [{ bearerAuth: [] }], responses: { '200': { description: 'Fichier CSV' } } },
+    },
   },
 };

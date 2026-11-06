@@ -17,6 +17,7 @@ import { citiesRouter } from './routes/cities.routes.js';
 import { documentsRouter } from './routes/documents.routes.js';
 import { formulasRouter } from './routes/formulas.routes.js';
 import { healthRouter } from './routes/health.js';
+import { instructorRouter } from './routes/instructor.routes.js';
 import { paymentsRouter } from './routes/payments.routes.js';
 import { sessionsRouter } from './routes/sessions.routes.js';
 import { webhooksRouter } from './routes/webhooks.routes.js';
@@ -55,6 +56,7 @@ export function createApp(): Express {
   app.use('/api/v1', bookingsRouter);
   app.use('/api/v1', paymentsRouter);
   app.use('/api/v1', documentsRouter);
+  app.use('/api/v1', instructorRouter);
   app.use('/api/v1/admin', adminRouter);
 
   app.use(notFoundHandler);

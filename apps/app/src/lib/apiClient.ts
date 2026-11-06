@@ -85,6 +85,8 @@ export const apiClient = {
   get: <T>(path: string) => apiRequest<T>(path, { method: 'GET' }),
   post: <T>(path: string, body?: unknown) =>
     apiRequest<T>(path, { method: 'POST', body: body ? JSON.stringify(body) : undefined }),
+  put: <T>(path: string, body?: unknown) =>
+    apiRequest<T>(path, { method: 'PUT', body: body ? JSON.stringify(body) : undefined }),
   patch: <T>(path: string, body?: unknown) =>
     apiRequest<T>(path, { method: 'PATCH', body: body ? JSON.stringify(body) : undefined }),
   delete: <T>(path: string) => apiRequest<T>(path, { method: 'DELETE' }),

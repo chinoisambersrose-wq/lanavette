@@ -2,8 +2,11 @@ import type { Types } from 'mongoose';
 import { env } from '../config/env.js';
 import { ApiError } from '../middleware/errorHandler.js';
 import { Booking, type BookingDocument } from '../models/Booking.js';
-import { Formula } from '../models/Formula.js';
+import { Formula, type FormulaDocument } from '../models/Formula.js';
 import { Session, type SessionDocument } from '../models/Session.js';
+import { User } from '../models/User.js';
+import { Waitlist } from '../models/Waitlist.js';
+import { notifyWaitlistSpotAvailable } from './notification.service.js';
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -48,9 +51,38 @@ export async function createBooking(
   });
 }
 
-/** Rend la place a la session de facon atomique, quelle que soit la raison. */
+/** Rend la place a la session de facon atomique, quelle que soit la raison, puis previent la liste d'attente. */
 async function releaseSessionPlace(sessionId: Types.ObjectId | string): Promise<void> {
   await Session.findOneAndUpdate({ _id: sessionId }, { $inc: { placesRestantes: 1 } });
+  await notifyNextWaitlistEntry(sessionId);
+}
+
+/**
+ * Previent le premier inscrit non notifie de la liste d'attente d'une session (regle metier n°5
+ * du cahier des charges : "a chaque place liberee, les inscrits sont prevenus par ordre d'inscription").
+ */
+async function notifyNextWaitlistEntry(sessionId: Types.ObjectId | string): Promise<void> {
+  const entry = await Waitlist.findOneAndUpdate(
+    { sessionId, notifie: false },
+    { notifie: true },
+    { sort: { createdAt: 1 } },
+  );
+
+  if (!entry) return;
+
+  const [student, session] = await Promise.all([
+    User.findById(entry.studentId),
+    Session.findById(sessionId).populate<{ formulaId: FormulaDocument }>('formulaId'),
+  ]);
+
+  if (!student || !session) return;
+
+  await notifyWaitlistSpotAvailable(
+    student.email,
+    student.telephone,
+    `${student.prenom} ${student.nom}`,
+    session.formulaId.nom,
+  );
 }
 
 /** true si l'annulation/le report est dans la fenetre gratuite (CGV, regle configurable). */

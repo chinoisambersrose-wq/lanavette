@@ -1,7 +1,5 @@
+import { LESSON_PRESENCE_STATUSES, type LessonPresenceStatus } from 'shared';
 import { Schema, model, type Document, type Types } from 'mongoose';
-
-export const LESSON_PRESENCE_STATUSES = ['presente', 'absente', 'retard'] as const;
-export type LessonPresenceStatus = (typeof LESSON_PRESENCE_STATUSES)[number];
 
 export interface LessonDocument extends Document {
   _id: Types.ObjectId;

@@ -19,3 +19,8 @@ export type BookingSource = (typeof BOOKING_SOURCES)[number];
 
 /** Duree en minutes avant expiration d'une reservation non payee (regle metier n°2). */
 export const BOOKING_HOLD_DURATION_MINUTES = 15;
+
+/** Avis du moniteur en fin de stage (CAHIER_DES_CHARGES.md section 7) : declenche une alerte admin si "pas_pret". */
+export const AVIS_FIN_STAGE = ['pret', 'pas_pret'] as const;
+
+export type AvisFinStage = (typeof AVIS_FIN_STAGE)[number];

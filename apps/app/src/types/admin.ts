@@ -1,4 +1,4 @@
-import type { FormulaCategory, Gearbox, Role, SessionStatus } from 'shared';
+import type { ExamResultValue, FormulaCategory, Gearbox, Role, SessionStatus } from 'shared';
 
 export interface Formula {
   _id: string;
@@ -68,6 +68,47 @@ export interface AdminUser {
   nom: string;
   role: Role;
   actif: boolean;
+}
+
+export interface BookingAdmin {
+  _id: string;
+  studentId: Populated<{ prenom: string; nom: string; email: string }>;
+  sessionId: Populated<{ formulaId: string; examSlotId?: string }>;
+  statut: string;
+  montantTotal: number;
+}
+
+export interface ExamResultAdmin {
+  _id: string;
+  bookingId: Populated<{
+    studentId: Populated<{ prenom: string; nom: string }>;
+    sessionId: Populated<{ formulaId: Populated<{ nom: string }> }>;
+  }>;
+  examSlotId: string;
+  date: string;
+  resultat: ExamResultValue;
+}
+
+export interface ExamResultStatsRow {
+  key: string;
+  label: string;
+  admis: number;
+  ajourne: number;
+  absent: number;
+  tauxReussite: number;
+}
+
+export interface PaymentAdmin {
+  _id: string;
+  bookingId: Populated<{
+    studentId: Populated<{ prenom: string; nom: string }>;
+    sessionId: Populated<{ formulaId: Populated<{ nom: string }> }>;
+  }>;
+  montant: number;
+  statut: string;
+  prestataire: string;
+  numeroFacture?: string;
+  createdAt: string;
 }
 
 export function populatedId(value: Populated<object>): string {

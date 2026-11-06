@@ -92,18 +92,29 @@ avant la mise en prod.
 
 ## Lot 4 · Espace moniteur et notifications
 
-- [ ] Espace moniteur `/moniteur` (mobile d'abord) : planning jour / semaine, fiche élève
-- [ ] Saisie après leçon : heures, compétences, commentaire, présence
-- [ ] Avis de fin de stage prêt / pas prêt + alerte admin
-- [ ] Déclaration des disponibilités
-- [ ] Récapitulatif mensuel des heures (PDF)
-- [ ] Service de notifications (emails Brevo / Resend, SMS) avec modèles en français
-- [ ] Notifications de la section 13 du cahier des charges
-- [ ] Liste d'attente : inscription + notification à chaque place libérée
-- [ ] Saisie des résultats d'examen + statistiques de réussite dans le back-office
-- [ ] Export CSV des paiements
+- [x] Espace moniteur `/moniteur` (mobile d'abord) : planning, fiche élève. Version simplifiée :
+  liste des sessions à venir (pas de bascule jour/semaine dédiée), lien GPS vers le point de RDV
+  non ajouté (pas de coordonnées de navigation prévues pour l'instant).
+- [x] Saisie après leçon : heures, compétences, commentaire, présence
+- [x] Avis de fin de stage prêt / pas prêt + alerte admin (email aux comptes admin)
+- [x] Déclaration des disponibilités
+- [x] Récapitulatif mensuel des heures (PDF)
+- [x] Service de notifications (Brevo email + SMS, REST direct) avec modèles en français. Sans
+  `BREVO_API_KEY` (aucun compte disponible dans cet environnement), les envois sont seulement
+  journalisés — même logique de gating que Stripe/S3/Alma.
+- [x] Notifications de la section 13 déclenchées par le code : réservation confirmée (élève+moniteur),
+  document refusé, place libérée (liste d'attente), résultat d'examen saisi. Non fait : rappels
+  programmés (veille de leçon, veille d'examen, échéance de paiement) — nécessitent une tâche
+  planifiée supplémentaire, à ajouter si besoin.
+- [x] Liste d'attente : inscription (`POST /sessions/:id/waitlist`) + notification au premier
+  inscrit non notifié à chaque place libérée, par ordre d'inscription
+- [x] Saisie des résultats d'examen (clôture la réservation) + statistiques de réussite par
+  formule/ville/moniteur dans le back-office
+- [x] Export CSV des paiements (back-office)
 
-**Validation :** recette complète en préproduction (section 16 du cahier des charges).
+**Validation :** recette complète en préproduction (section 16 du cahier des charges) — non rejouée
+ici (pas d'environnement de préproduction disponible) ; logique vérifiée par les tests automatisés
+(droits par rôle, saisie de leçon, avis de fin de stage, liste d'attente, résultats d'examen).
 
 ## Lot 5 · Pilote et lancement
 

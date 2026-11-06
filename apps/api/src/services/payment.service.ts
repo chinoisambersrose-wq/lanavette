@@ -3,17 +3,14 @@ import { getStripeClient } from '../config/stripe.js';
 import { env } from '../config/env.js';
 import { logger } from '../config/logger.js';
 import { ApiError } from '../middleware/errorHandler.js';
-import { Booking } from '../models/Booking.js';
+import { Booking, type BookingDocument } from '../models/Booking.js';
+import type { FormulaDocument } from '../models/Formula.js';
 import { Payment } from '../models/Payment.js';
+import type { SessionDocument } from '../models/Session.js';
+import { User, type UserDocument } from '../models/User.js';
+import { isDuplicateKeyError } from '../utils/mongoErrors.js';
 import { assignInvoiceNumber } from './invoice.service.js';
-
-interface MongoDuplicateKeyError {
-  code: number;
-}
-
-function isDuplicateKeyError(err: unknown): boolean {
-  return typeof err === 'object' && err !== null && (err as MongoDuplicateKeyError).code === 11000;
-}
+import { notifyBookingConfirmed } from './notification.service.js';
 
 /** Cree une session Stripe Checkout pour une reservation en attente de paiement. */
 export async function createCheckoutSession(bookingId: string): Promise<Stripe.Checkout.Session> {
@@ -106,5 +103,32 @@ export async function handleStripeEvent(event: Stripe.Event): Promise<void> {
     booking.modePaiement = 'comptant';
     booking.expireAt = undefined;
     await booking.save();
+    await notifyBookingConfirmationEmails(booking);
   }
+}
+
+/** Notifie l'eleve et le moniteur apres confirmation (evenement "reservation confirmee", section 13). */
+async function notifyBookingConfirmationEmails(booking: BookingDocument): Promise<void> {
+  const [student, populatedBooking] = await Promise.all([
+    User.findById(booking.studentId),
+    Booking.findById(booking._id).populate<{
+      sessionId: SessionDocument & { formulaId: FormulaDocument; instructorId: UserDocument };
+    }>({
+      path: 'sessionId',
+      populate: ['formulaId', 'instructorId'],
+    }),
+  ]);
+
+  if (!student || !populatedBooking) return;
+
+  const { formulaId: formula, instructorId: instructor } = populatedBooking.sessionId;
+
+  await notifyBookingConfirmed({
+    studentEmail: student.email,
+    studentTelephone: student.telephone,
+    studentName: `${student.prenom} ${student.nom}`,
+    formulaName: formula.nom,
+    instructorEmail: instructor.email,
+    instructorName: `${instructor.prenom} ${instructor.nom}`,
+  });
 }

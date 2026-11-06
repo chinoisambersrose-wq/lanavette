@@ -9,5 +9,6 @@ apps/vitrine/src/env.d.ts
 *.log
 .DS_Store
 coverage/
+*.tsbuildinfo
 .vscode/*
 !.vscode/settings.json

@@ -1,11 +1,14 @@
 import { connectDb, disconnectDb } from './config/db.js';
 import { env } from './config/env.js';
 import { logger } from './config/logger.js';
+import { Booking } from './models/Booking.js';
 import { City } from './models/City.js';
 import { ExamSlot } from './models/ExamSlot.js';
 import { Formula } from './models/Formula.js';
 import { InstructorProfile } from './models/InstructorProfile.js';
+import { Lesson } from './models/Lesson.js';
 import { MeetingPoint } from './models/MeetingPoint.js';
+import type { SessionDocument } from './models/Session.js';
 import { Session } from './models/Session.js';
 import { StudentProfile } from './models/StudentProfile.js';
 import { User } from './models/User.js';
@@ -33,6 +36,8 @@ async function seed(): Promise<void> {
     MeetingPoint.deleteMany({}),
     ExamSlot.deleteMany({}),
     Session.deleteMany({}),
+    Booking.deleteMany({}),
+    Lesson.deleteMany({}),
   ]);
 
   const motDePasseHash = await hashPassword(DEMO_PASSWORD);
@@ -82,6 +87,7 @@ async function seed(): Promise<void> {
       villes: [city._id],
       boites: ['manuelle', 'automatique'],
       statut: 'salarie',
+      disponibilites: [{ debut: daysFromNow(1), fin: daysFromNow(30) }],
     },
     {
       userId: instructor2._id,
@@ -227,6 +233,8 @@ async function seed(): Promise<void> {
     { formula: moto!, meetingPoint: meetingPoints[0]!, instructor: instructor2, startInDays: 25 },
   ];
 
+  let firstSession: SessionDocument | undefined;
+
   for (const { formula, meetingPoint, instructor, startInDays } of sessionsToCreate) {
     const dureeJours = formula.dureeJours || 1;
     const dates = Array.from({ length: dureeJours }, (_, i) => ({
@@ -247,6 +255,30 @@ async function seed(): Promise<void> {
     });
 
     await publishSession(session._id);
+    firstSession ??= session;
+  }
+
+  logger.info("Creation d'une reservation confirmee avec une lecon [DEMO] (espace moniteur)...");
+  if (firstSession) {
+    const booking = await Booking.create({
+      studentId: eleve._id,
+      sessionId: firstSession._id,
+      statut: 'confirmee',
+      montantTotal: maxiManuelle!.prix,
+      modePaiement: 'comptant',
+    });
+    firstSession.placesRestantes = 0;
+    await firstSession.save();
+
+    await Lesson.create({
+      bookingId: booking._id,
+      instructorId: firstSession.instructorId,
+      date: new Date(),
+      heures: 2,
+      competences: ['Maitrise des commandes', 'Creneau'],
+      commentaire: '[DEMO] Bon debut, a revoir : controles retroviseurs',
+      presence: 'presente',
+    });
   }
 
   logger.info('Seed termine.');

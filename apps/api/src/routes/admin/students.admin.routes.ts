@@ -3,6 +3,8 @@ import { Router } from 'express';
 import { requireAuth, requireRole } from '../../middleware/auth.js';
 import { ApiError } from '../../middleware/errorHandler.js';
 import { StudentProfile } from '../../models/StudentProfile.js';
+import { User } from '../../models/User.js';
+import { notifyDocumentRejected } from '../../services/notification.service.js';
 
 export const studentsAdminRouter = Router();
 
@@ -36,6 +38,18 @@ studentsAdminRouter.patch('/:userId/documents/:docId', async (req, res, next) =>
     }
 
     const document = profile.documents.find((d) => d._id.toString() === req.params.docId);
+
+    if (document?.statut === 'refuse') {
+      const student = await User.findById(profile.userId);
+      if (student) {
+        await notifyDocumentRejected(
+          student.email,
+          `${student.prenom} ${student.nom}`,
+          document.type,
+        );
+      }
+    }
+
     res.json({ data: document });
   } catch (err) {
     next(err);

@@ -27,7 +27,9 @@ export default function LoginPage(): JSX.Element {
 
   if (user) {
     const redirect = searchParams.get('redirect');
-    return <Navigate to={redirect || (user.role === 'admin' ? '/admin' : '/mon-compte')} replace />;
+    const roleHome =
+      user.role === 'admin' ? '/admin' : user.role === 'moniteur' ? '/moniteur' : '/mon-compte';
+    return <Navigate to={redirect || roleHome} replace />;
   }
 
   return (

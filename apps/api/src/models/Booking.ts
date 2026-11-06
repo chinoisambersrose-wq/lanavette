@@ -1,7 +1,9 @@
 import {
+  AVIS_FIN_STAGE,
   BOOKING_SOURCES,
   BOOKING_STATUSES,
   PAYMENT_METHODS,
+  type AvisFinStage,
   type BookingSource,
   type BookingStatus,
   type PaymentMethod,
@@ -17,6 +19,8 @@ export interface BookingDocument extends Document {
   modePaiement?: PaymentMethod;
   source: BookingSource;
   expireAt?: Date;
+  avisFinStage?: AvisFinStage;
+  avisFinStageDate?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -30,6 +34,8 @@ const bookingSchema = new Schema<BookingDocument>(
     modePaiement: { type: String, enum: PAYMENT_METHODS },
     source: { type: String, enum: BOOKING_SOURCES, default: 'site' },
     expireAt: { type: Date },
+    avisFinStage: { type: String, enum: AVIS_FIN_STAGE },
+    avisFinStageDate: { type: Date },
   },
   { timestamps: true },
 );

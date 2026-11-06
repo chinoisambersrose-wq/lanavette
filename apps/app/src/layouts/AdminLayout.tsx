@@ -7,6 +7,8 @@ const links = [
   { to: '/admin/exam-slots', label: "Creneaux d'examen" },
   { to: '/admin/sessions', label: 'Sessions' },
   { to: '/admin/students', label: 'Eleves' },
+  { to: '/admin/exam-results', label: "Resultats d'examen" },
+  { to: '/admin/payments', label: 'Paiements' },
 ];
 
 export default function AdminLayout(): JSX.Element {
