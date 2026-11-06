@@ -9,6 +9,7 @@ COPY apps/api/package.json apps/api/package.json
 RUN npm ci --ignore-scripts
 
 FROM deps AS build
+COPY tsconfig.base.json tsconfig.base.json
 COPY packages/shared packages/shared
 COPY apps/api apps/api
 RUN npm run build -w packages/shared \
