@@ -33,7 +33,7 @@
     "*.{ts,tsx}": [
       "eslint --fix --max-warnings=0"
     ],
-    "*.{ts,tsx,js,json,md,astro}": [
+    "*.{ts,tsx,js,json,md,astro,yml,yaml}": [
       "prettier --write"
     ]
   },
