@@ -13,12 +13,12 @@ const links = [
 
 <header class="sticky top-0 z-40 border-b bg-white">
   <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-    <a href="/" class="text-xl font-bold text-slate-800">NAVETTE</a>
+    <a href="/" class="text-xl font-semibold tracking-tight text-slate-900">NAVETTE</a>
 
     <nav class="hidden items-center gap-5 text-sm text-slate-600 md:flex">
       {
         links.map((link) => (
-          <a href={link.href} class="hover:text-slate-900">
+          <a href={link.href} class="transition-colors hover:text-slate-900">
             {link.label}
           </a>
         ))
@@ -26,12 +26,15 @@ const links = [
     </nav>
 
     <div class="flex items-center gap-3">
-      <a href={`${APP_URL}/login`} class="text-sm text-slate-600 hover:text-slate-900">
+      <a
+        href={`${APP_URL}/login`}
+        class="text-sm text-slate-600 transition-colors hover:text-slate-900"
+      >
         Connexion
       </a>
       <a
         href={`${APP_URL}/inscription`}
-        class="rounded bg-slate-800 px-4 py-2 text-sm text-white hover:bg-slate-700"
+        class="rounded-lg bg-slate-900 px-4 py-2 text-sm text-white transition-colors hover:bg-slate-700"
       >
         Je m&apos;inscris
       </a>

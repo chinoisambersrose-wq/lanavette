@@ -6,11 +6,11 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div class="divide-y rounded-lg border bg-white">
+<div class="divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white">
   {
     items.map((item, i) => (
       <details class="group p-4" open={i === 0}>
-        <summary class="cursor-pointer list-none font-medium text-slate-800">
+        <summary class="cursor-pointer list-none font-medium text-slate-900">
           {item.question}
         </summary>
         <p class="mt-2 text-sm text-slate-600">{item.reponse}</p>

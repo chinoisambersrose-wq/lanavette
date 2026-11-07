@@ -9,22 +9,27 @@ const { formula } = Astro.props;
 const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
 ---
 
-<article class="flex flex-col rounded-lg border bg-white p-5 shadow-sm">
+<article
+  class:list={[
+    'flex flex-col rounded-xl border bg-white p-5',
+    formula.badge ? 'border-indigo-600 ring-1 ring-indigo-600' : 'border-slate-200',
+  ]}
+>
   {
     formula.badge && (
-      <span class="mb-2 inline-block w-fit rounded bg-amber-100 px-2 py-0.5 text-xs text-amber-800">
+      <span class="mb-2 inline-block w-fit rounded-lg bg-indigo-600 px-2 py-0.5 text-xs font-medium text-white">
         {formula.badge}
       </span>
     )
   }
 
-  <h3 class="text-lg font-semibold text-slate-800">{formula.nom}</h3>
+  <h3 class="text-lg font-semibold text-slate-900">{formula.nom}</h3>
   <p class="text-sm text-slate-500">
     Boite {formula.boite} · {formula.dureeJours} jour(s)
     {formula.heuresConduite ? ` · ${formula.heuresConduite}h de conduite` : ''}
   </p>
 
-  <p class="mt-3 text-2xl font-bold text-slate-900">{(formula.prix / 100).toFixed(0)} €</p>
+  <p class="mt-3 text-2xl font-semibold text-slate-900">{(formula.prix / 100).toFixed(0)} €</p>
   {
     formula.mensualiteAffichee && (
       <p class="text-sm text-slate-500">
@@ -34,12 +39,12 @@ const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
   }
 
   <ul class="mt-3 flex-1 space-y-1 text-sm text-slate-600">
-    {formula.pointsCles.map((point) => <li>• {point}</li>)}
+    {formula.pointsCles.map((point) => <li>· {point}</li>)}
   </ul>
 
   <a
     href={`${APP_URL}/sessions?formula=${formula.slug}`}
-    class="mt-4 inline-block rounded bg-slate-800 px-4 py-2 text-center text-sm font-medium text-white hover:bg-slate-700"
+    class="mt-4 inline-block rounded-lg bg-slate-900 px-4 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-slate-700"
   >
     Voir les dates
   </a>
