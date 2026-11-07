@@ -14,7 +14,7 @@ export default function PublicLayout(): JSX.Element {
     <div className="min-h-screen bg-slate-50">
       <header className="flex items-center justify-between border-b bg-white px-6 py-3">
         <Link to="/formules" className="text-lg font-semibold text-slate-800">
-          [NOM]
+          NAVETTE
         </Link>
         <nav className="flex items-center gap-4 text-sm">
           <Link to="/formules" className="text-slate-600 hover:underline">

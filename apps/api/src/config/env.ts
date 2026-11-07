@@ -26,8 +26,8 @@ const envSchema = z.object({
   S3_SECRET_ACCESS_KEY: z.string().optional(),
   BREVO_API_KEY: z.string().optional(),
   BREVO_SENDER_EMAIL: z.string().default('no-reply@example.com'),
-  BREVO_SENDER_NAME: z.string().default('[NOM]'),
-  BREVO_SMS_SENDER: z.string().default('NOM'),
+  BREVO_SENDER_NAME: z.string().default('NAVETTE'),
+  BREVO_SMS_SENDER: z.string().default('NAVETTE'),
 });
 
 function loadEnv() {

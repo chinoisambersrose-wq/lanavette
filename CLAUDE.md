@@ -8,7 +8,7 @@ dans `docs/ROADMAP.md`. Lis-les avant toute tâche importante.
 
 Plateforme d'auto-école spécialisée dans le permis en accéléré : l'élève réserve en ligne un
 stage intensif dont il connaît les dates, le moniteur et la date d'examen avant de payer.
-Nom de marque provisoire : `[NOM]` (à remplacer partout quand il sera choisi).
+Nom de marque : **NAVETTE**.
 
 ## Langue
 

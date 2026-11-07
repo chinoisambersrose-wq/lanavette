@@ -34,7 +34,7 @@ export async function generateInvoicePdf(data: InvoiceData): Promise<Buffer> {
     doc.on('end', () => resolve(Buffer.concat(chunks)));
     doc.on('error', reject);
 
-    doc.fontSize(20).text('[NOM] — Facture', { align: 'left' });
+    doc.fontSize(20).text('NAVETTE — Facture', { align: 'left' });
     doc.moveDown();
     doc.fontSize(10).fillColor('#555555');
     doc.text(`Facture n° ${payment.numeroFacture ?? '(non attribue)'}`);

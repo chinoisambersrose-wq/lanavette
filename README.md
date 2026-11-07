@@ -1,4 +1,4 @@
-# [NOM] — Plateforme d'auto-école en accéléré
+# NAVETTE — Plateforme d'auto-école en accéléré
 
 Monorepo npm workspaces : `apps/api`, `apps/app`, `apps/vitrine`, `packages/shared`.
 Voir `CLAUDE.md` pour les conventions et `docs/CAHIER_DES_CHARGES.md` / `docs/ROADMAP.md`

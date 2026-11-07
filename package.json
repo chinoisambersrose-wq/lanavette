@@ -2,7 +2,7 @@
   "name": "plateforme-permis-accelere",
   "private": true,
   "version": "0.1.0",
-  "description": "Monorepo de la plateforme d'auto-ecole en accelere (nom de marque provisoire [NOM])",
+  "description": "Monorepo de la plateforme d'auto-ecole en accelere (nom de marque provisoire NAVETTE)",
   "workspaces": [
     "apps/*",
     "packages/*"

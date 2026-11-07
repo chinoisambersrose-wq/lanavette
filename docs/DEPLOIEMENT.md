@@ -133,10 +133,14 @@ supplémentaire nécessaire pour ces deux apps).
 
 ## 6. Avant l'ouverture au public
 
-- [ ] Lot 0 tranché : nom de marque, domaine, prix, ville de lancement, charte graphique
-- [ ] `[NOM]` et `exemple.fr` remplacés partout dans le code (vitrine, app, emails, factures PDF)
-- [ ] Seed de démo retiré/adapté (le script `apps/api/src/seed.ts` crée des données `[DEMO]`,
-  à ne pas lancer contre la base de production telle quelle)
+- [x] Nom de marque tranché : **NAVETTE**, remplacé partout dans le code (vitrine, app, emails,
+  factures PDF). Reste à trancher : domaine, prix définitifs, ville de lancement, charte graphique
+- [ ] `exemple.fr` remplacé par le vrai domaine une fois choisi (sitemap, URLs canoniques,
+  CORS `APP_ORIGIN`/`VITRINE_ORIGIN`)
+- [ ] Seed de démo retiré avant l'ouverture publique : le script `apps/api/src/seed.ts` a été
+  lancé une fois sur la base de production pour valider le déploiement de bout en bout (données
+  clairement marquées `[DEMO]`) — à effacer (ou simplement laisser les vraies formules les
+  remplacer) avant d'ouvrir au public
 - [ ] Scénarios de recette de la section 16 du cahier des charges rejoués en préproduction avec
   de vraies clés de test (Lot 2 et Lot 4 l'ont été uniquement avec des tests automatisés et des
   clés factices, faute de comptes Stripe/Atlas/Vercel disponibles dans cet environnement)

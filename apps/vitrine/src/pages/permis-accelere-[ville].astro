@@ -27,14 +27,14 @@ const structuredData = [
   {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    name: `[NOM] — ${city.nom}`,
+    name: `NAVETTE — ${city.nom}`,
     address: { '@type': 'PostalAddress', addressLocality: city.nom, addressCountry: 'FR' },
   },
 ];
 ---
 
 <BaseLayout
-  title={`Permis accéléré à ${city.nom} — [NOM]`}
+  title={`Permis accéléré à ${city.nom} — NAVETTE`}
   description={`Stages de permis accéléré à ${city.nom} : points de rendez-vous, formules disponibles et prochaines sessions.`}
   structuredData={structuredData}
 >

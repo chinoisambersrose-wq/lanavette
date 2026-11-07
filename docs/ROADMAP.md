@@ -6,7 +6,9 @@ Référence fonctionnelle : `docs/CAHIER_DES_CHARGES.md`.
 
 ## Lot 0 · Cadrage (hors code, à faire par le porteur du projet)
 
-- [ ] Nom de la marque et domaine choisis — remplacer `[NOM]` dans tout le dépôt
+- [x] Nom de la marque choisi : **NAVETTE** — remplacé dans tout le dépôt
+- [ ] Nom de domaine choisi et acheté (le site tourne pour l'instant sur les URLs par défaut
+  Vercel et l'IP du VPS, voir `docs/DEPLOIEMENT.md`)
 - [ ] Liste des formules et prix définitive
 - [ ] Ville(s) de lancement et points de RDV
 - [ ] Prestataires de paiement choisis, comptes de test créés (Stripe, Alma)

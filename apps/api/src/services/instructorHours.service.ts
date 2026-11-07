@@ -47,7 +47,7 @@ export async function generateHoursSummaryPdf(
     doc.on('end', () => resolve(Buffer.concat(chunks)));
     doc.on('error', reject);
 
-    doc.fontSize(20).text('[NOM] — Recapitulatif mensuel des heures', { align: 'left' });
+    doc.fontSize(20).text('NAVETTE — Recapitulatif mensuel des heures', { align: 'left' });
     doc.moveDown();
     doc.fontSize(10).fillColor('#555555');
     doc.text(`Moniteur : ${instructor.prenom} ${instructor.nom}`);

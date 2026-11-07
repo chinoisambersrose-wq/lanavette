@@ -37,7 +37,7 @@ const structuredData = [
   {
     '@context': 'https://schema.org',
     '@type': 'DrivingSchool',
-    name: '[NOM]',
+    name: 'NAVETTE',
     description: "Plateforme d'auto-école spécialisée dans le permis en accéléré.",
     url: Astro.site?.toString(),
   },
@@ -54,18 +54,24 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="[NOM] — Permis en accéléré, dates et moniteur garantis avant de payer"
+  title="NAVETTE — Permis en accéléré, dates et moniteur garantis avant de payer"
   description="Réservez votre stage de permis en accéléré : vous connaissez vos dates, votre moniteur et votre date d'examen avant de payer."
   structuredData={structuredData}
 >
-  <section class="mx-auto max-w-6xl px-4 py-16 text-center">
-    <h1 class="text-3xl font-bold text-slate-800 md:text-5xl">
-      Le permis en accéléré, sans surprise
-    </h1>
-    <p class="mx-auto mt-4 max-w-2xl text-slate-600">
-      Choisissez votre formule, découvrez vos dates, votre moniteur et votre date d'examen —
-      <strong>avant</strong> de payer.
-    </p>
+  <section
+    class="relative flex min-h-[28rem] items-center justify-center bg-cover bg-center px-4 py-24 text-center md:min-h-[36rem]"
+    style="background-image: url('/hero.jpg');"
+  >
+    <div class="absolute inset-0 bg-slate-950/60" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-2xl">
+      <h1 class="text-3xl font-bold text-white drop-shadow md:text-5xl">
+        Le permis en accéléré, sans surprise
+      </h1>
+      <p class="mx-auto mt-4 max-w-2xl text-slate-100 drop-shadow">
+        Choisissez votre formule, découvrez vos dates, votre moniteur et votre date d'examen —
+        <strong>avant</strong> de payer.
+      </p>
+    </div>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 pb-16">
