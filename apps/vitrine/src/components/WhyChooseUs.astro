@@ -1,0 +1,50 @@
+---
+import Icon from './Icon.astro';
+
+const points = [
+  {
+    icon: 'users',
+    title: 'Un moniteur unique',
+    description: 'Le même moniteur vous suit du début à la fin, pour un apprentissage cohérent.',
+  },
+  {
+    icon: 'calendar',
+    title: 'Un planning clair',
+    description: "Dates, horaires et point de RDV communiqués avant même de payer.",
+  },
+  {
+    icon: 'shield',
+    title: 'Examen garanti',
+    description: "Chaque session est rattachée à un créneau d'examen réservé à l'avance.",
+  },
+  {
+    icon: 'clock',
+    title: 'Un parcours accéléré',
+    description: 'Un stage intensif plutôt que des mois de leçons espacées.',
+  },
+] as const;
+---
+
+<section class="bg-slate-950 py-16 text-white">
+  <div class="mx-auto max-w-6xl px-4">
+    <p class="text-center text-xs font-semibold uppercase tracking-widest text-indigo-400">
+      Trajectoire claire
+    </p>
+    <h2 class="mt-2 text-center text-2xl font-bold md:text-3xl">Pourquoi choisir NAVETTE ?</h2>
+    <p class="mx-auto mt-3 max-w-2xl text-center text-slate-300">
+      Pas de mauvaise surprise : vous savez tout de votre stage avant de vous engager.
+    </p>
+
+    <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        points.map((point) => (
+          <div class="rounded-lg border border-white/10 bg-white/5 p-5">
+            <Icon name={point.icon} class="h-7 w-7 text-indigo-400" />
+            <h3 class="mt-3 font-semibold">{point.title}</h3>
+            <p class="mt-1 text-sm text-slate-300">{point.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

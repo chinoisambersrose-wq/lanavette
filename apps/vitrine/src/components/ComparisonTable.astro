@@ -1,0 +1,43 @@
+---
+// Comparaison qualitative, sans chiffre invente : des constats generaux sur le fonctionnement
+// habituel d'une auto-ecole classique, mis en regard des regles metier reelles de NAVETTE.
+const rows = [
+  { critere: 'Durée totale du parcours', navette: 'Stage intensif de quelques jours', autres: 'Leçons espacées sur plusieurs mois' },
+  { critere: 'Dates connues avant inscription', navette: true, autres: false },
+  { critere: 'Moniteur unique sur tout le stage', navette: true, autres: 'Variable selon disponibilité' },
+  { critere: "Date d'examen garantie", navette: true, autres: false },
+] as const;
+---
+
+<section class="mx-auto max-w-4xl px-4 py-16">
+  <h2 class="text-center text-2xl font-bold text-slate-800 md:text-3xl">
+    NAVETTE face à une auto-école classique
+  </h2>
+
+  <div class="mt-8 overflow-x-auto">
+    <table class="w-full min-w-[32rem] border-collapse overflow-hidden rounded-lg border bg-white text-sm">
+      <thead>
+        <tr class="bg-slate-50 text-left text-slate-500">
+          <th class="p-3 font-medium">Critère</th>
+          <th class="p-3 font-medium text-indigo-700">NAVETTE</th>
+          <th class="p-3 font-medium">Auto-école classique</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((row) => (
+            <tr class="border-t">
+              <td class="p-3 text-slate-700">{row.critere}</td>
+              <td class="p-3 font-medium text-slate-900">
+                {typeof row.navette === 'boolean' ? (row.navette ? '✓ Oui' : '—') : row.navette}
+              </td>
+              <td class="p-3 text-slate-500">
+                {typeof row.autres === 'boolean' ? (row.autres ? '✓ Oui' : '✗ Non') : row.autres}
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

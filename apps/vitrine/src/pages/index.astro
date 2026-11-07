@@ -1,8 +1,12 @@
 ---
+import ComparisonTable from '../components/ComparisonTable.astro';
+import ContactBand from '../components/ContactBand.astro';
 import CtaBanner from '../components/CtaBanner.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import FormulaCard from '../components/FormulaCard.astro';
 import TestimonialBlock from '../components/TestimonialBlock.astro';
+import TrustStats from '../components/TrustStats.astro';
+import WhyChooseUs from '../components/WhyChooseUs.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCities, getFormulas } from '../lib/api.js';
 
@@ -74,6 +78,8 @@ const structuredData = [
     </div>
   </section>
 
+  <TrustStats />
+
   <section class="mx-auto max-w-6xl px-4 pb-16">
     <div class="mb-6 flex justify-center gap-2" id="category-tabs">
       {
@@ -122,6 +128,10 @@ const structuredData = [
     </script>
   </section>
 
+  <WhyChooseUs />
+
+  <ComparisonTable />
+
   <TestimonialBlock />
 
   <section class="mx-auto max-w-6xl px-4 py-10">
@@ -139,6 +149,8 @@ const structuredData = [
       }
     </div>
   </section>
+
+  <ContactBand />
 
   <CtaBanner />
 

@@ -1,16 +1,40 @@
 ---
 const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
+
+const points = [
+  'Dates et moniteur connus avant de payer',
+  "Date d'examen garantie",
+  'Paiement en plusieurs fois disponible',
+];
 ---
 
-<section class="mx-auto my-10 max-w-6xl rounded-lg bg-slate-800 px-6 py-10 text-center text-white">
-  <h2 class="text-2xl font-bold">Prêt à réserver votre stage ?</h2>
-  <p class="mt-2 text-slate-200">
-    Choisissez votre formule, votre moniteur et votre date d'examen avant de payer.
-  </p>
-  <a
-    href={`${APP_URL}/inscription`}
-    class="mt-5 inline-block rounded bg-white px-6 py-3 font-medium text-slate-800 hover:bg-slate-100"
-  >
-    Je m&apos;inscris
-  </a>
+<section
+  class="relative my-10 overflow-hidden bg-cover bg-center px-6 py-16 text-center text-white"
+  style="background-image: url('/hero.jpg');"
+>
+  <div class="absolute inset-0 bg-slate-950/70" aria-hidden="true"></div>
+  <div class="relative mx-auto max-w-2xl">
+    <h2 class="text-2xl font-bold md:text-3xl">Prêt à embarquer avec NAVETTE ?</h2>
+    <p class="mt-2 text-slate-200">
+      Choisissez votre formule, votre moniteur et votre date d'examen avant de payer.
+    </p>
+
+    <ul class="mx-auto mt-5 flex max-w-xl flex-col flex-wrap items-center gap-2 text-sm text-slate-100 sm:flex-row sm:justify-center">
+      {
+        points.map((point) => (
+          <li class="flex items-center gap-1.5">
+            <span aria-hidden="true">✓</span>
+            {point}
+          </li>
+        ))
+      }
+    </ul>
+
+    <a
+      href={`${APP_URL}/inscription`}
+      class="mt-6 inline-block rounded bg-white px-6 py-3 font-medium text-slate-900 hover:bg-slate-100"
+    >
+      Je m&apos;inscris
+    </a>
+  </div>
 </section>
