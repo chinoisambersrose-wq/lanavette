@@ -6,14 +6,12 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div class="divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white">
+<div class="divide-y divide-slate-800 rounded-xl border border-slate-800 bg-slate-900">
   {
     items.map((item, i) => (
       <details class="group p-4" open={i === 0}>
-        <summary class="cursor-pointer list-none font-medium text-slate-900">
-          {item.question}
-        </summary>
-        <p class="mt-2 text-sm text-slate-600">{item.reponse}</p>
+        <summary class="cursor-pointer list-none font-medium text-white">{item.question}</summary>
+        <p class="mt-2 text-sm text-slate-300">{item.reponse}</p>
       </details>
     ))
   }

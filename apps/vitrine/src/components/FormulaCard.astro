@@ -11,8 +11,8 @@ const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
 
 <article
   class:list={[
-    'flex flex-col rounded-xl border bg-white p-5',
-    formula.badge ? 'border-indigo-600 ring-1 ring-indigo-600' : 'border-slate-200',
+    'flex flex-col rounded-xl border bg-slate-900 p-5',
+    formula.badge ? 'border-indigo-500 ring-1 ring-indigo-500' : 'border-slate-800',
   ]}
 >
   {
@@ -23,28 +23,28 @@ const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
     )
   }
 
-  <h3 class="text-lg font-semibold text-slate-900">{formula.nom}</h3>
-  <p class="text-sm text-slate-500">
+  <h3 class="text-lg font-semibold text-white">{formula.nom}</h3>
+  <p class="text-sm text-slate-400">
     Boite {formula.boite} · {formula.dureeJours} jour(s)
     {formula.heuresConduite ? ` · ${formula.heuresConduite}h de conduite` : ''}
   </p>
 
-  <p class="mt-3 text-2xl font-semibold text-slate-900">{(formula.prix / 100).toFixed(0)} €</p>
+  <p class="mt-3 text-2xl font-semibold text-white">{(formula.prix / 100).toFixed(0)} €</p>
   {
     formula.mensualiteAffichee && (
-      <p class="text-sm text-slate-500">
+      <p class="text-sm text-slate-400">
         dès {(formula.mensualiteAffichee / 100).toFixed(0)} €/mois
       </p>
     )
   }
 
-  <ul class="mt-3 flex-1 space-y-1 text-sm text-slate-600">
+  <ul class="mt-3 flex-1 space-y-1 text-sm text-slate-300">
     {formula.pointsCles.map((point) => <li>· {point}</li>)}
   </ul>
 
   <a
     href={`${APP_URL}/sessions?formula=${formula.slug}`}
-    class="mt-4 inline-block rounded-lg bg-slate-900 px-4 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-slate-700"
+    class="mt-4 inline-block rounded-lg bg-white px-4 py-2 text-center text-sm font-medium text-slate-900 transition-colors hover:bg-slate-200"
   >
     Voir les dates
   </a>

@@ -16,11 +16,11 @@ const { Content } = await post.render();
 
 <BaseLayout title={`${post.data.title} — NAVETTE`} description={post.data.description}>
   <article class="mx-auto max-w-2xl px-4 py-12">
-    <h1 class="text-3xl font-bold text-slate-800">{post.data.title}</h1>
-    <p class="mt-2 text-xs text-slate-400">
+    <h1 class="text-3xl font-semibold text-white">{post.data.title}</h1>
+    <p class="mt-2 text-xs text-slate-500">
       {post.data.publishDate.toLocaleDateString('fr-FR')} · {post.data.author}
     </p>
-    <div class="markdown-content mt-6 text-slate-700">
+    <div class="markdown-content mt-6 text-slate-300">
       <Content />
     </div>
   </article>
@@ -32,7 +32,7 @@ const { Content } = await post.render();
     margin-bottom: 0.5rem;
     font-size: 1.25rem;
     font-weight: 600;
-    color: #1e293b;
+    color: #ffffff;
   }
   .markdown-content :global(p) {
     margin-bottom: 0.75rem;

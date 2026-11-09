@@ -31,8 +31,8 @@ const structuredData = [
   structuredData={structuredData}
 >
   <section class="mx-auto max-w-4xl px-4 py-12">
-    <h1 class="text-3xl font-semibold text-slate-900">Permis B accéléré</h1>
-    <p class="mt-3 max-w-2xl text-slate-600">
+    <h1 class="text-3xl font-semibold text-white">Permis B accéléré</h1>
+    <p class="mt-3 max-w-2xl text-slate-300">
       Le permis B reste le permis le plus demandé en France. Avec NAVETTE, vous passez votre
       permis voiture en quelques jours plutôt qu'en plusieurs mois, avec un moniteur unique et une
       date d'examen connue avant de payer.
@@ -40,8 +40,8 @@ const structuredData = [
   </section>
 
   <section id="stages" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-10">
-    <h2 class="text-2xl font-semibold text-slate-900">Nos stages accélérés</h2>
-    <p class="mt-2 max-w-2xl text-slate-600">
+    <h2 class="text-2xl font-semibold text-white">Nos stages accélérés</h2>
+    <p class="mt-2 max-w-2xl text-slate-300">
       Boîte manuelle ou automatique, avec ou sans conduite accompagnée préalable : choisissez la
       formule qui correspond à votre niveau.
     </p>
@@ -51,13 +51,13 @@ const structuredData = [
   </section>
 
   <section id="boite-automatique" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-10">
-    <h2 class="text-2xl font-semibold text-slate-900">Permis boîte automatique</h2>
-    <p class="mt-2 text-slate-600">
+    <h2 class="text-2xl font-semibold text-white">Permis boîte automatique</h2>
+    <p class="mt-2 text-slate-300">
       La boîte automatique simplifie l'apprentissage : moins de manipulations, plus de
       concentration sur la circulation. Nos stages en boîte automatique suivent la même méthode
       que nos stages en boîte manuelle.
     </p>
-    <a href="/permis-automatique/" class="mt-3 inline-block font-medium text-indigo-600 hover:underline">
+    <a href="/permis-automatique/" class="mt-3 inline-block font-medium text-indigo-400 hover:underline">
       Voir les formules boîte automatique →
     </a>
   </section>
@@ -76,8 +76,8 @@ const structuredData = [
   </section>
 
   <section id="examen" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-10">
-    <h2 class="text-2xl font-semibold text-slate-900">Examen du permis B</h2>
-    <p class="mt-2 text-slate-600">
+    <h2 class="text-2xl font-semibold text-white">Examen du permis B</h2>
+    <p class="mt-2 text-slate-300">
       L'examen pratique dure environ 32 minutes, dont 25 minutes de conduite effective. L'examinateur
       évalue la prise d'information, la maîtrise du véhicule et le partage de la route avec les
       autres usagers. Chez NAVETTE, votre session est rattachée à un créneau d'examen réservé à
@@ -86,8 +86,8 @@ const structuredData = [
   </section>
 
   <section id="aac" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-10">
-    <h2 class="text-2xl font-semibold text-slate-900">Conduite accompagnée (AAC)</h2>
-    <p class="mt-2 max-w-2xl text-slate-600">
+    <h2 class="text-2xl font-semibold text-white">Conduite accompagnée (AAC)</h2>
+    <p class="mt-2 max-w-2xl text-slate-300">
       Dès 15 ans, la conduite accompagnée permet d'accumuler de l'expérience avant l'examen, avec
       un accompagnateur. Un parcours progressif, encadré par le même moniteur tout au long du
       stage.
@@ -98,7 +98,7 @@ const structuredData = [
           {stagesAac.map((formula) => <FormulaCard formula={formula} />)}
         </div>
       ) : (
-        <p class="mt-4 text-sm text-slate-500">Aucune formule AAC disponible pour le moment.</p>
+        <p class="mt-4 text-sm text-slate-400">Aucune formule AAC disponible pour le moment.</p>
       )
     }
   </section>

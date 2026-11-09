@@ -12,16 +12,16 @@ const cities = await getCities();
   description="Stage de permis moto en accéléré avec NAVETTE : catégories de permis, nos formules et où les passer."
 >
   <section class="mx-auto max-w-4xl px-4 py-12">
-    <h1 class="text-3xl font-semibold text-slate-900">Permis moto accéléré</h1>
-    <p class="mt-3 max-w-2xl text-slate-600">
+    <h1 class="text-3xl font-semibold text-white">Permis moto accéléré</h1>
+    <p class="mt-3 max-w-2xl text-slate-300">
       Comme pour le permis B, NAVETTE applique sa méthode au permis moto : un moniteur unique, un
       planning clair et une date d'examen garantie avant de payer.
     </p>
   </section>
 
   <section id="tout-savoir" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-10">
-    <h2 class="text-2xl font-semibold text-slate-900">Permis moto : tout savoir</h2>
-    <p class="mt-2 text-slate-600">
+    <h2 class="text-2xl font-semibold text-white">Permis moto : tout savoir</h2>
+    <p class="mt-2 text-slate-300">
       Le permis moto se décline en plusieurs catégories selon l'âge et la puissance du véhicule :
       AM (cyclomoteur, dès 14 ans), A1 (légère, dès 16 ans), A2 (puissance limitée, dès 18 ans) et
       A (sans limitation de puissance, accessible après 2 ans d'expérience en A2 ou dès 24 ans).
@@ -30,14 +30,14 @@ const cities = await getCities();
   </section>
 
   <section id="accelere" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-10">
-    <h2 class="text-2xl font-semibold text-slate-900">Nos stages moto accélérés</h2>
+    <h2 class="text-2xl font-semibold text-white">Nos stages moto accélérés</h2>
     {
       formulas.length > 0 ? (
         <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
           {formulas.map((formula) => <FormulaCard formula={formula} />)}
         </div>
       ) : (
-        <p class="mt-4 text-sm text-slate-500">Aucun stage moto disponible pour le moment.</p>
+        <p class="mt-4 text-sm text-slate-400">Aucun stage moto disponible pour le moment.</p>
       )
     }
   </section>
@@ -67,8 +67,8 @@ const cities = await getCities();
   </section>
 
   <section id="permis-a2" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-10">
-    <h2 class="text-2xl font-semibold text-slate-900">Permis A2</h2>
-    <p class="mt-2 text-slate-600">
+    <h2 class="text-2xl font-semibold text-white">Permis A2</h2>
+    <p class="mt-2 text-slate-300">
       Le permis A2 est accessible dès 18 ans et donne accès aux motos dont la puissance est
       limitée à 35 kW. C'est la catégorie la plus courante pour un premier permis moto. Après 2
       ans de pratique, il est possible de passer en catégorie A (sans limitation de puissance) via

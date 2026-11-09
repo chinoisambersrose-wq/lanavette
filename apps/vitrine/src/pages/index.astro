@@ -92,7 +92,7 @@ const structuredData = [
               'rounded-full px-4 py-2 text-sm font-medium transition-colors',
               i === 0
                 ? 'bg-indigo-600 text-white'
-                : 'border border-slate-200 bg-white text-slate-600',
+                : 'border border-slate-800 bg-slate-900 text-slate-300',
             ]}
           >
             {cat.label}
@@ -118,9 +118,9 @@ const structuredData = [
       tabs.forEach((tab) => {
         tab.addEventListener('click', () => {
           tabs.forEach((t) => t.classList.remove('bg-indigo-600', 'text-white'));
-          tabs.forEach((t) => t.classList.add('border', 'border-slate-200', 'bg-white', 'text-slate-600'));
+          tabs.forEach((t) => t.classList.add('border', 'border-slate-800', 'bg-slate-900', 'text-slate-300'));
           tab.classList.add('bg-indigo-600', 'text-white');
-          tab.classList.remove('border', 'border-slate-200', 'bg-white', 'text-slate-600');
+          tab.classList.remove('border', 'border-slate-800', 'bg-slate-900', 'text-slate-300');
 
           const category = tab.dataset.category;
           items.forEach((item) => {
@@ -138,13 +138,13 @@ const structuredData = [
   <TestimonialBlock />
 
   <section class="mx-auto max-w-6xl px-4 py-16">
-    <h2 class="mb-6 text-center text-2xl font-semibold text-slate-900">Nos villes</h2>
+    <h2 class="mb-6 text-center text-2xl font-semibold text-white">Nos villes</h2>
     <div class="flex flex-wrap justify-center gap-3">
       {
         cities.map((city) => (
           <a
             href={`/permis-accelere-${city.slug}/`}
-            class="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-50"
+            class="rounded-lg border border-slate-800 bg-slate-900 px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-800"
           >
             {city.nom}
           </a>
@@ -158,7 +158,7 @@ const structuredData = [
   <CtaBanner />
 
   <section class="mx-auto max-w-3xl px-4 py-16">
-    <h2 class="mb-6 text-center text-2xl font-semibold text-slate-900">Questions fréquentes</h2>
+    <h2 class="mb-6 text-center text-2xl font-semibold text-white">Questions fréquentes</h2>
     <FaqAccordion items={faqItems} />
   </section>
 </BaseLayout>

@@ -19,8 +19,8 @@ const options = [
   description="Tous les financements pour votre stage de permis accéléré : CPF, co-financement, paiement en plusieurs fois jusqu'à 10 fois."
 >
   <section id="tous-les-financements" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-12">
-    <h1 class="text-3xl font-semibold text-slate-900">Tous les financements</h1>
-    <p class="mt-3 text-slate-600">
+    <h1 class="text-3xl font-semibold text-white">Tous les financements</h1>
+    <p class="mt-3 text-slate-300">
       Comptant, plusieurs fois, CPF ou co-financement : voici les solutions disponibles pour
       financer votre stage.
     </p>
@@ -28,9 +28,9 @@ const options = [
     <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
       {
         options.map((option) => (
-          <div class="rounded-xl border border-slate-200 bg-white p-4">
-            <h2 class="font-semibold text-slate-900">{option.titre}</h2>
-            <p class="mt-1 text-sm text-slate-600">{option.description}</p>
+          <div class="rounded-xl border border-slate-800 bg-slate-900 p-4">
+            <h2 class="font-semibold text-white">{option.titre}</h2>
+            <p class="mt-1 text-sm text-slate-300">{option.description}</p>
           </div>
         ))
       }
@@ -38,13 +38,13 @@ const options = [
   </section>
 
   <section id="cpf" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-10">
-    <h2 class="text-2xl font-semibold text-slate-900">CPF et co-financement</h2>
-    <p class="mt-2 text-slate-600">
+    <h2 class="text-2xl font-semibold text-white">CPF et co-financement</h2>
+    <p class="mt-2 text-slate-300">
       [DEMO] Le Compte Personnel de Formation (CPF) peut couvrir tout ou partie du coût de
       certaines formules, sous conditions d'éligibilité fixées par l'État. Un co-financement est
       possible : le solde non couvert par le CPF est réglé par un autre moyen de paiement
       (comptant, plusieurs fois). Vérifiez vos droits sur
-      <a href="https://www.moncompteformation.gouv.fr" class="text-indigo-600 hover:underline" rel="noopener">
+      <a href="https://www.moncompteformation.gouv.fr" class="text-indigo-400 hover:underline" rel="noopener">
         moncompteformation.gouv.fr
       </a>
       avant de réserver.
@@ -52,28 +52,28 @@ const options = [
   </section>
 
   <section id="plusieurs-fois" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-10">
-    <h2 class="text-2xl font-semibold text-slate-900">Payer en plusieurs fois</h2>
-    <p class="mt-2 text-slate-600">
+    <h2 class="text-2xl font-semibold text-white">Payer en plusieurs fois</h2>
+    <p class="mt-2 text-slate-300">
       Le paiement fractionné est disponible sous conditions, sans frais, via notre partenaire de
       paiement. Simulez votre mensualité ci-dessous.
     </p>
 
-    <div class="mt-6 rounded-xl border border-slate-200 bg-white p-6">
-      <h3 class="font-semibold text-slate-900">Simulateur de mensualités</h3>
-      <p class="mt-1 text-sm text-slate-500">Estimation simple, hors frais de crédit éventuels.</p>
+    <div class="mt-6 rounded-xl border border-slate-800 bg-slate-900 p-6">
+      <h3 class="font-semibold text-white">Simulateur de mensualités</h3>
+      <p class="mt-1 text-sm text-slate-400">Estimation simple, hors frais de crédit éventuels.</p>
 
       <div class="mt-4 flex flex-wrap items-end gap-4">
-        <label class="text-sm">
+        <label class="text-sm text-slate-300">
           Montant du stage (€)
           <input
             id="sim-montant"
             type="number"
             value="1500"
             min="0"
-            class="mt-1 block w-32 rounded-lg border px-2 py-1"
+            class="mt-1 block w-32 rounded-lg border border-slate-700 bg-slate-800 px-2 py-1 text-white"
           />
         </label>
-        <label class="text-sm">
+        <label class="text-sm text-slate-300">
           Nombre de mensualités
           <input
             id="sim-mois"
@@ -81,10 +81,10 @@ const options = [
             value="10"
             min="1"
             max="24"
-            class="mt-1 block w-24 rounded-lg border px-2 py-1"
+            class="mt-1 block w-24 rounded-lg border border-slate-700 bg-slate-800 px-2 py-1 text-white"
           />
         </label>
-        <p class="text-lg font-semibold text-slate-900">
+        <p class="text-lg font-semibold text-white">
           soit <span id="sim-resultat">150.00</span> €/mois
         </p>
       </div>
@@ -107,8 +107,8 @@ const options = [
   </section>
 
   <section id="dix-fois" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-10">
-    <h2 class="text-2xl font-semibold text-slate-900">Paiement en 10 fois</h2>
-    <p class="mt-2 text-slate-600">
+    <h2 class="text-2xl font-semibold text-white">Paiement en 10 fois</h2>
+    <p class="mt-2 text-slate-300">
       Jusqu'à 10 fois sans frais, selon votre éligibilité au moment de la réservation : le
       paiement fractionné est proposé via un partenaire de financement tiers et reste soumis à
       son acceptation. Le nombre de mensualités disponibles peut varier selon le montant du

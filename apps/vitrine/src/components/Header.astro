@@ -45,27 +45,27 @@ const links: NavItem[] = [
 ];
 ---
 
-<header class="sticky top-0 z-40 border-b bg-white">
+<header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-950">
   <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-    <a href="/" class="text-xl font-semibold tracking-tight text-slate-900">NAVETTE</a>
+    <a href="/" class="text-xl font-semibold tracking-tight text-white">NAVETTE</a>
 
-    <nav class="hidden items-center gap-5 text-sm text-slate-600 lg:flex">
+    <nav class="hidden items-center gap-5 text-sm text-slate-300 lg:flex">
       {
         links.map((link) =>
           link.children ? (
             <div class="group relative">
-              <a href={link.href} class="flex items-center gap-1 py-2 transition-colors hover:text-slate-900">
+              <a href={link.href} class="flex items-center gap-1 py-2 transition-colors hover:text-white">
                 {link.label}
                 <svg viewBox="0 0 20 20" class="h-3.5 w-3.5 fill-current" aria-hidden="true">
                   <path d="M5.5 7.5l4.5 4.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </a>
-              <div class="invisible absolute left-0 top-full min-w-[15rem] rounded-xl border border-slate-200 bg-white p-2 opacity-0 shadow-lg transition-opacity group-hover:visible group-hover:opacity-100">
+              <div class="invisible absolute left-0 top-full min-w-[15rem] rounded-xl border border-slate-800 bg-slate-900 p-2 opacity-0 shadow-lg transition-opacity group-hover:visible group-hover:opacity-100">
                 {
                   link.children.map((child) => (
                     <a
                       href={child.href}
-                      class="block rounded-lg px-3 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
+                      class="block rounded-lg px-3 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-800 hover:text-white"
                     >
                       {child.label}
                     </a>
@@ -74,7 +74,7 @@ const links: NavItem[] = [
               </div>
             </div>
           ) : (
-            <a href={link.href} class="transition-colors hover:text-slate-900">
+            <a href={link.href} class="transition-colors hover:text-white">
               {link.label}
             </a>
           ),
@@ -85,13 +85,13 @@ const links: NavItem[] = [
     <div class="flex items-center gap-3">
       <a
         href={`${APP_URL}/login`}
-        class="hidden text-sm text-slate-600 transition-colors hover:text-slate-900 sm:inline"
+        class="hidden text-sm text-slate-300 transition-colors hover:text-white sm:inline"
       >
         Connexion
       </a>
       <a
         href={`${APP_URL}/inscription`}
-        class="rounded-lg bg-slate-900 px-4 py-2 text-sm text-white transition-colors hover:bg-slate-700"
+        class="rounded-lg bg-white px-4 py-2 text-sm font-medium text-slate-900 transition-colors hover:bg-slate-200"
       >
         Je m&apos;inscris
       </a>
