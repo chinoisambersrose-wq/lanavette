@@ -4,14 +4,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const options = [
   { titre: 'Carte bancaire comptant', description: 'Paiement en une fois, sécurisé par Stripe.' },
   { titre: 'Virement SEPA', description: 'Confirmation différée de quelques jours.' },
-  {
-    titre: 'Paiement en plusieurs fois',
-    description: '3 à 4 fois sans frais, sous conditions (selon disponibilité).',
-  },
+  { titre: 'Paiement en plusieurs fois', description: 'De 3 à 10 fois sans frais, sous conditions.' },
   {
     titre: 'CPF (Mon Compte Formation)',
     description:
-      '[DEMO] Sous conditions d\'éligibilité. Renseignez-vous sur moncompteformation.gouv.fr avant de réserver.',
+      "[DEMO] Sous conditions d'éligibilité. Renseignez-vous sur moncompteformation.gouv.fr avant de réserver.",
   },
   { titre: 'Paiement en agence', description: 'Sur rendez-vous, avec justificatif.' },
 ];
@@ -19,24 +16,50 @@ const options = [
 
 <BaseLayout
   title="Financer son permis — NAVETTE"
-  description="Les solutions de financement pour votre stage de permis accéléré : comptant, plusieurs fois, CPF."
+  description="Tous les financements pour votre stage de permis accéléré : CPF, co-financement, paiement en plusieurs fois jusqu'à 10 fois."
 >
-  <section class="mx-auto max-w-4xl px-4 py-12">
-    <h1 class="text-3xl font-bold text-slate-800">Financer votre permis</h1>
+  <section id="tous-les-financements" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-12">
+    <h1 class="text-3xl font-semibold text-slate-900">Tous les financements</h1>
+    <p class="mt-3 text-slate-600">
+      Comptant, plusieurs fois, CPF ou co-financement : voici les solutions disponibles pour
+      financer votre stage.
+    </p>
 
     <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
       {
         options.map((option) => (
-          <div class="rounded border bg-white p-4">
-            <h2 class="font-semibold text-slate-800">{option.titre}</h2>
+          <div class="rounded-xl border border-slate-200 bg-white p-4">
+            <h2 class="font-semibold text-slate-900">{option.titre}</h2>
             <p class="mt-1 text-sm text-slate-600">{option.description}</p>
           </div>
         ))
       }
     </div>
+  </section>
 
-    <section class="mt-12 rounded-lg border bg-white p-6">
-      <h2 class="text-xl font-semibold text-slate-800">Simulateur de mensualités</h2>
+  <section id="cpf" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-10">
+    <h2 class="text-2xl font-semibold text-slate-900">CPF et co-financement</h2>
+    <p class="mt-2 text-slate-600">
+      [DEMO] Le Compte Personnel de Formation (CPF) peut couvrir tout ou partie du coût de
+      certaines formules, sous conditions d'éligibilité fixées par l'État. Un co-financement est
+      possible : le solde non couvert par le CPF est réglé par un autre moyen de paiement
+      (comptant, plusieurs fois). Vérifiez vos droits sur
+      <a href="https://www.moncompteformation.gouv.fr" class="text-indigo-600 hover:underline" rel="noopener">
+        moncompteformation.gouv.fr
+      </a>
+      avant de réserver.
+    </p>
+  </section>
+
+  <section id="plusieurs-fois" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-10">
+    <h2 class="text-2xl font-semibold text-slate-900">Payer en plusieurs fois</h2>
+    <p class="mt-2 text-slate-600">
+      Le paiement fractionné est disponible sous conditions, sans frais, via notre partenaire de
+      paiement. Simulez votre mensualité ci-dessous.
+    </p>
+
+    <div class="mt-6 rounded-xl border border-slate-200 bg-white p-6">
+      <h3 class="font-semibold text-slate-900">Simulateur de mensualités</h3>
       <p class="mt-1 text-sm text-slate-500">Estimation simple, hors frais de crédit éventuels.</p>
 
       <div class="mt-4 flex flex-wrap items-end gap-4">
@@ -47,7 +70,7 @@ const options = [
             type="number"
             value="1500"
             min="0"
-            class="mt-1 block w-32 rounded border px-2 py-1"
+            class="mt-1 block w-32 rounded-lg border px-2 py-1"
           />
         </label>
         <label class="text-sm">
@@ -58,14 +81,14 @@ const options = [
             value="10"
             min="1"
             max="24"
-            class="mt-1 block w-24 rounded border px-2 py-1"
+            class="mt-1 block w-24 rounded-lg border px-2 py-1"
           />
         </label>
-        <p class="text-lg font-semibold text-slate-800">
+        <p class="text-lg font-semibold text-slate-900">
           soit <span id="sim-resultat">150.00</span> €/mois
         </p>
       </div>
-    </section>
+    </div>
 
     <script>
       const montantInput = document.getElementById('sim-montant') as HTMLInputElement;
@@ -81,5 +104,15 @@ const options = [
       montantInput?.addEventListener('input', recalculer);
       moisInput?.addEventListener('input', recalculer);
     </script>
+  </section>
+
+  <section id="dix-fois" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-10">
+    <h2 class="text-2xl font-semibold text-slate-900">Paiement en 10 fois</h2>
+    <p class="mt-2 text-slate-600">
+      Jusqu'à 10 fois sans frais, selon votre éligibilité au moment de la réservation : le
+      paiement fractionné est proposé via un partenaire de financement tiers et reste soumis à
+      son acceptation. Le nombre de mensualités disponibles peut varier selon le montant du
+      stage.
+    </p>
   </section>
 </BaseLayout>
