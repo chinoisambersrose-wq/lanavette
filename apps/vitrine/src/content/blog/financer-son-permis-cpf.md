@@ -1,10 +1,10 @@
 ---
-title: 'Financer son permis avec le CPF [DEMO]'
-description: '[DEMO] Les grandes étapes pour utiliser son Compte Personnel de Formation pour payer un stage de permis accéléré.'
+title: 'Financer son permis avec le CPF'
+description: 'Les grandes étapes pour utiliser son Compte Personnel de Formation pour payer un stage de permis accéléré.'
 publishDate: 2026-10-15
 ---
 
-_Article de démonstration — contenu [DEMO], à faire valider par un conseil juridique avant mise en ligne._
+_Article de démonstration — à faire valider par un conseil juridique avant mise en ligne._
 
 Le Compte Personnel de Formation (CPF) peut, sous certaines conditions, financer tout ou partie d'un
 stage de permis de conduire.

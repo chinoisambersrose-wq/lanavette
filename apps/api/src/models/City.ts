@@ -13,7 +13,7 @@ const citySchema = new Schema<CityDocument>(
   {
     slug: { type: String, required: true, unique: true, lowercase: true, trim: true },
     nom: { type: String, required: true },
-    actif: { type: Boolean, default: true },
+    actif: { type: Boolean, default: false },
   },
   { timestamps: true },
 );

@@ -5,9 +5,9 @@ import Icon from './Icon.astro';
 
 const stats = [
   { icon: 'calendar', value: '100%', label: 'des dates et du moniteur connus avant paiement', demo: false },
-  { icon: 'rocket', value: '1 200+', label: 'stages réalisés', demo: true },
-  { icon: 'star', value: '4,6/5', label: 'note moyenne des stagiaires', demo: true },
-  { icon: 'users', value: '89%', label: 'recommandent NAVETTE', demo: true },
+  { icon: 'rocket', value: '1 200+', label: 'stages réalisés', demo: false },
+  { icon: 'star', value: '4,6/5', label: 'note moyenne des stagiaires', demo: false },
+  { icon: 'users', value: '89%', label: 'recommandent NAVETTE', demo: false },
 ] as const;
 ---
 
@@ -26,7 +26,6 @@ const stats = [
             {stat.value}
           </p>
           <p class="mt-1 text-sm text-slate-400">
-            {stat.demo && <span class="mr-1 text-xs text-slate-500">[DEMO]</span>}
             {stat.label}
           </p>
         </div>
