@@ -4,7 +4,7 @@ import { GEARBOXES } from '../constants/session.js';
 export const createCitySchema = z.object({
   slug: z.string().min(1),
   nom: z.string().min(1),
-  actif: z.boolean().default(true),
+  actif: z.boolean().default(false),
 });
 
 export type CreateCityInput = z.input<typeof createCitySchema>;

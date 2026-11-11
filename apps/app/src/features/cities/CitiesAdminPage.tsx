@@ -6,11 +6,13 @@ import {
   useCreateMeetingPoint,
   useDeleteMeetingPoint,
   useMeetingPointsAdmin,
+  useUpdateCity,
 } from './useCitiesAdmin.js';
 
 export default function CitiesAdminPage(): JSX.Element {
   const { data: cities, isLoading } = useCitiesAdmin();
   const createCity = useCreateCity();
+  const updateCity = useUpdateCity();
   const [cityForm, setCityForm] = useState({ slug: '', nom: '' });
   const [selectedCityId, setSelectedCityId] = useState<string | undefined>(undefined);
 
@@ -68,6 +70,10 @@ export default function CitiesAdminPage(): JSX.Element {
           Ajouter la ville
         </button>
       </form>
+      <p className="mb-4 text-sm text-slate-500">
+        Une nouvelle ville reste masquée aux élèves. Activez-la uniquement lorsqu’elle est
+        réellement desservie.
+      </p>
 
       {isLoading ? (
         <p>Chargement...</p>
@@ -75,12 +81,21 @@ export default function CitiesAdminPage(): JSX.Element {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <ul className="rounded border bg-white">
             {cities?.map((city) => (
-              <li key={city._id}>
+              <li key={city._id} className="flex items-center justify-between gap-2 border-b p-2">
                 <button
+                  type="button"
                   onClick={() => setSelectedCityId(city._id)}
-                  className={`w-full p-2 text-left ${selectedCityId === city._id ? 'bg-slate-100' : ''}`}
+                  className={`text-left ${selectedCityId === city._id ? 'font-semibold' : ''}`}
                 >
-                  {city.nom} ({city.slug})
+                  {city.nom} ({city.slug}) — {city.actif ? 'desservie' : 'masquée'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => updateCity.mutate({ id: city._id, input: { actif: !city.actif } })}
+                  disabled={updateCity.isPending}
+                  className="text-sm text-indigo-700 hover:underline disabled:opacity-50"
+                >
+                  {city.actif ? 'Masquer' : 'Marquer desservie'}
                 </button>
               </li>
             ))}

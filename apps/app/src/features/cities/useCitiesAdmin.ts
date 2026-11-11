@@ -1,4 +1,4 @@
-import type { CreateCityInput, CreateMeetingPointInput } from 'shared';
+import type { CreateCityInput, CreateMeetingPointInput, UpdateCityInput } from 'shared';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../../lib/apiClient.js';
 import type { City, MeetingPoint } from '../../types/admin.js';
@@ -14,6 +14,15 @@ export function useCreateCity() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (input: CreateCityInput) => apiClient.post<City>('/admin/cities', input),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: CITIES_KEY }),
+  });
+}
+
+export function useUpdateCity() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, input }: { id: string; input: UpdateCityInput }) =>
+      apiClient.patch<City>(`/admin/cities/${id}`, input),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: CITIES_KEY }),
   });
 }
