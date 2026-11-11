@@ -1,10 +1,10 @@
 ---
-title: 'Comment choisir sa formule de permis accéléré ? [DEMO]'
-description: "[DEMO] Les critères pour choisir entre un stage intensif, une conduite accompagnée ou une représentation à l'examen."
+title: 'Comment choisir sa formule de permis accéléré ?'
+description: "Les critères pour choisir entre un stage intensif, une conduite accompagnée ou une représentation à l'examen."
 publishDate: 2026-10-01
 ---
 
-_Article de démonstration — contenu [DEMO], à remplacer par un vrai article avant mise en ligne._
+_Article de démonstration — à remplacer par un vrai article avant mise en ligne._
 
 Choisir sa formule de permis accéléré dépend de plusieurs critères : le nombre d'heures de conduite déjà
 effectuées, la date d'examen souhaitée, et le budget disponible.
