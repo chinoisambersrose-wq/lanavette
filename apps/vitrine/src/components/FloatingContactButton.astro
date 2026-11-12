@@ -1,0 +1,62 @@
+---
+import { snapchatUrl, whatsappUrl } from '../lib/contact.js';
+
+const message = "Bonjour, j'ai une question sur les stages de permis accéléré NAVETTE.";
+---
+
+<div class="fixed bottom-6 right-6 z-50" id="floating-contact">
+  <div
+    id="floating-contact-menu"
+    class="mb-3 hidden flex-col gap-2 rounded-xl border border-slate-800 bg-slate-900 p-3 shadow-xl"
+  >
+    <a
+      href={whatsappUrl(message)}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="whitespace-nowrap rounded-lg bg-white px-4 py-2 text-sm font-medium text-slate-900 transition-colors hover:bg-slate-200"
+    >
+      WhatsApp
+    </a>
+    <a
+      href={snapchatUrl()}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="whitespace-nowrap rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-800"
+    >
+      Snapchat
+    </a>
+  </div>
+
+  <button
+    id="floating-contact-toggle"
+    type="button"
+    aria-label="Nous contacter"
+    aria-expanded="false"
+    class="flex h-14 w-14 items-center justify-center rounded-full bg-white text-slate-900 shadow-lg transition-transform hover:scale-105"
+  >
+    <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 5h16v10H9l-4 4V5z" />
+    </svg>
+  </button>
+</div>
+
+<script>
+  const toggle = document.getElementById('floating-contact-toggle');
+  const menu = document.getElementById('floating-contact-menu');
+  const wrapper = document.getElementById('floating-contact');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    menu?.classList.toggle('flex');
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  document.addEventListener('click', (event) => {
+    if (wrapper && !wrapper.contains(event.target as Node)) {
+      menu?.classList.add('hidden');
+      menu?.classList.remove('flex');
+      toggle?.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>
