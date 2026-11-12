@@ -4,11 +4,19 @@ import { logger } from '../config/logger.js';
 const BREVO_EMAIL_URL = 'https://api.brevo.com/v3/smtp/email';
 const BREVO_SMS_URL = 'https://api.brevo.com/v3/transactionalSMS/sms';
 
+/** Adresse d'invitation Trustpilot (transfert automatique : Trustpilot invite le destinataire a laisser un avis). */
+const TRUSTPILOT_INVITE_EMAIL = 'lanavete.com+8b305bac09@invite.trustpilot.com';
+
 /**
  * Envoie un email transactionnel via Brevo. Sans `BREVO_API_KEY` (dev/preprod sans compte),
  * l'envoi est seulement journalise : meme comportement de gating que Stripe/S3/Alma.
  */
-export async function sendEmail(to: string, subject: string, htmlContent: string): Promise<void> {
+export async function sendEmail(
+  to: string,
+  subject: string,
+  htmlContent: string,
+  bcc?: string[],
+): Promise<void> {
   if (!env.BREVO_API_KEY) {
     logger.info({ to, subject }, '[notification email non envoyee, BREVO_API_KEY absente]');
     return;
@@ -20,6 +28,7 @@ export async function sendEmail(to: string, subject: string, htmlContent: string
     body: JSON.stringify({
       sender: { name: env.BREVO_SENDER_NAME, email: env.BREVO_SENDER_EMAIL },
       to: [{ email: to }],
+      ...(bcc?.length ? { bcc: bcc.map((email) => ({ email })) } : {}),
       subject,
       htmlContent,
     }),
@@ -109,19 +118,27 @@ export async function notifyWaitlistSpotAvailable(
   ]);
 }
 
-/** Evenement "Resultat saisi" : email a l'eleve (+ invitation a laisser un avis si admis). */
+/**
+ * Evenement "Resultat saisi" : email a l'eleve. Si admis, transfert en copie a Trustpilot
+ * pour declencher automatiquement une invitation a laisser un avis.
+ */
 export async function notifyExamResult(
   studentEmail: string,
   studentName: string,
   resultat: string,
 ): Promise<void> {
   const base = `<p>Bonjour ${studentName},</p><p>Le resultat de votre examen a ete saisi : <strong>${resultat}</strong>.</p>`;
-  const avis =
-    resultat === 'admis'
-      ? '<p>Felicitations ! Nous vous recontacterons bientot pour recueillir votre avis.</p>'
-      : '';
+  const admis = resultat === 'admis';
+  const avis = admis
+    ? "<p>Felicitations ! N'hesitez pas a nous laisser un avis sur votre experience.</p>"
+    : '';
 
-  await sendEmail(studentEmail, 'Resultat de votre examen', base + avis);
+  await sendEmail(
+    studentEmail,
+    'Resultat de votre examen',
+    base + avis,
+    admis ? [TRUSTPILOT_INVITE_EMAIL] : undefined,
+  );
 }
 
 /** Avis de fin de stage "pas pret" (CAHIER_DES_CHARGES.md section 7) : alerte email a tous les admins. */

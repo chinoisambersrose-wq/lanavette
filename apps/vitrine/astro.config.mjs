@@ -4,5 +4,5 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   integrations: [tailwind(), sitemap()],
-  site: 'https://www.exemple.fr',
+  site: 'https://lanavete.com',
 });

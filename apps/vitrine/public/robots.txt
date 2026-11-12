@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.exemple.fr/sitemap-index.xml
+Sitemap: https://lanavete.com/sitemap-index.xml
