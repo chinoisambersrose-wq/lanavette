@@ -1,6 +1,12 @@
+import type { Formula } from '../../types/admin.js';
 import { FORMULA_CATEGORIES, GEARBOXES, type FormulaCategory, type Gearbox } from 'shared';
 import { useState, type FormEvent } from 'react';
-import { useArchiveFormula, useCreateFormula, useFormulasAdmin } from './useFormulasAdmin.js';
+import {
+  useArchiveFormula,
+  useCreateFormula,
+  useFormulasAdmin,
+  useUpdateFormula,
+} from './useFormulasAdmin.js';
 
 const emptyForm = {
   slug: '',
@@ -14,12 +20,38 @@ const emptyForm = {
 export default function FormulasAdminPage(): JSX.Element {
   const { data: formulas, isLoading } = useFormulasAdmin();
   const createFormula = useCreateFormula();
+  const updateFormula = useUpdateFormula();
   const archiveFormula = useArchiveFormula();
   const [form, setForm] = useState(emptyForm);
+  const [editingId, setEditingId] = useState<string | null>(null);
+
+  function startEdit(formula: Formula): void {
+    setEditingId(formula._id);
+    setForm({
+      slug: formula.slug,
+      nom: formula.nom,
+      categorie: formula.categorie,
+      boite: formula.boite,
+      dureeJours: formula.dureeJours,
+      prix: formula.prix,
+    });
+  }
+
+  function cancelEdit(): void {
+    setEditingId(null);
+    setForm(emptyForm);
+  }
 
   async function handleSubmit(event: FormEvent): Promise<void> {
     event.preventDefault();
-    await createFormula.mutateAsync({ ...form, pointsCles: [] });
+
+    if (editingId) {
+      await updateFormula.mutateAsync({ id: editingId, input: form });
+      setEditingId(null);
+    } else {
+      await createFormula.mutateAsync({ ...form, pointsCles: [] });
+    }
+
     setForm(emptyForm);
   }
 
@@ -87,11 +119,20 @@ export default function FormulasAdminPage(): JSX.Element {
         />
         <button
           type="submit"
-          disabled={createFormula.isPending}
+          disabled={createFormula.isPending || updateFormula.isPending}
           className="col-span-2 rounded bg-slate-800 py-1 text-white md:col-span-1"
         >
-          Creer
+          {editingId ? 'Enregistrer' : 'Creer'}
         </button>
+        {editingId && (
+          <button
+            type="button"
+            onClick={cancelEdit}
+            className="col-span-2 rounded border py-1 text-slate-600 md:col-span-1"
+          >
+            Annuler
+          </button>
+        )}
       </form>
 
       {isLoading ? (
@@ -116,7 +157,13 @@ export default function FormulasAdminPage(): JSX.Element {
                 <td className="p-2">{formula.boite}</td>
                 <td className="p-2">{(formula.prix / 100).toFixed(2)} EUR</td>
                 <td className="p-2">{formula.actif ? 'Oui' : 'Non'}</td>
-                <td className="p-2">
+                <td className="space-x-3 p-2">
+                  <button
+                    onClick={() => startEdit(formula)}
+                    className="text-slate-700 hover:underline"
+                  >
+                    Modifier
+                  </button>
                   {formula.actif && (
                     <button
                       onClick={() => archiveFormula.mutate(formula._id)}

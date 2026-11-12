@@ -131,11 +131,11 @@ async function seed(): Promise<void> {
     placesAffectees: 0,
   });
 
-  logger.info('Creation des formules [DEMO]...');
+  logger.info('Creation des formules...');
   const [maxiManuelle, maxiAutomatique, conduiteAccompagnee, , , moto] = await Formula.create([
     {
-      slug: 'stage-intensif-manuelle-demo',
-      nom: '[DEMO] Stage intensif boite manuelle',
+      slug: 'stage-intensif-manuelle',
+      nom: 'Stage intensif boite manuelle',
       categorie: 'voiture',
       boite: 'manuelle',
       heuresConduite: 20,
@@ -147,8 +147,8 @@ async function seed(): Promise<void> {
       ordre: 1,
     },
     {
-      slug: 'stage-intensif-automatique-demo',
-      nom: '[DEMO] Stage intensif boite automatique',
+      slug: 'stage-intensif-automatique',
+      nom: 'Stage intensif boite automatique',
       categorie: 'voiture',
       boite: 'automatique',
       heuresConduite: 16,
@@ -160,8 +160,8 @@ async function seed(): Promise<void> {
       ordre: 2,
     },
     {
-      slug: 'conduite-accompagnee-demo',
-      nom: '[DEMO] Conduite accompagnee',
+      slug: 'conduite-accompagnee',
+      nom: 'Conduite accompagnee',
       categorie: 'conduite_accompagnee',
       boite: 'manuelle',
       heuresConduite: 20,
@@ -173,8 +173,8 @@ async function seed(): Promise<void> {
       ordre: 3,
     },
     {
-      slug: 'code-en-ligne-demo',
-      nom: '[DEMO] Code en ligne',
+      slug: 'code-en-ligne',
+      nom: 'Code en ligne',
       categorie: 'code',
       boite: 'manuelle',
       dureeJours: 1,
@@ -184,8 +184,8 @@ async function seed(): Promise<void> {
       ordre: 4,
     },
     {
-      slug: 'stage-passerelle-demo',
-      nom: '[DEMO] Stage passerelle',
+      slug: 'stage-passerelle',
+      nom: 'Stage passerelle',
       categorie: 'passerelle',
       boite: 'manuelle',
       heuresConduite: 7,
@@ -196,8 +196,8 @@ async function seed(): Promise<void> {
       ordre: 5,
     },
     {
-      slug: 'stage-moto-demo',
-      nom: '[DEMO] Stage moto',
+      slug: 'stage-moto',
+      nom: 'Stage moto',
       categorie: 'moto',
       boite: 'manuelle',
       heuresConduite: 24,
