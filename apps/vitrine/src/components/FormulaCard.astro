@@ -1,5 +1,5 @@
 ---
-import ContactButtons from './ContactButtons.astro';
+import { FORMULA_IMAGE_BY_CATEGORY } from '../lib/formulaImages.js';
 import type { Formula } from '../lib/api.js';
 
 interface Props {
@@ -11,39 +11,50 @@ const { formula } = Astro.props;
 
 <article
   class:list={[
-    'flex flex-col rounded-xl border bg-slate-900 p-5',
+    'flex flex-col overflow-hidden rounded-xl border bg-slate-900',
     formula.badge ? 'border-indigo-500 ring-1 ring-indigo-500' : 'border-slate-800',
   ]}
 >
-  {
-    formula.badge && (
-      <span class="mb-2 inline-block w-fit rounded-lg bg-indigo-600 px-2 py-0.5 text-xs font-medium text-white">
-        {formula.badge}
-      </span>
-    )
-  }
-
-  <h3 class="text-lg font-semibold text-white">{formula.nom}</h3>
-  <p class="text-sm text-slate-400">
-    Boite {formula.boite} · {formula.dureeJours} jour(s)
-    {formula.heuresConduite ? ` · ${formula.heuresConduite}h de conduite` : ''}
-  </p>
-
-  <p class="mt-3 text-2xl font-semibold text-white">{(formula.prix / 100).toFixed(0)} €</p>
-  {
-    formula.mensualiteAffichee && (
-      <p class="text-sm text-slate-400">
-        dès {(formula.mensualiteAffichee / 100).toFixed(0)} €/mois
-      </p>
-    )
-  }
-
-  <ul class="mt-3 flex-1 space-y-1 text-sm text-slate-300">
-    {formula.pointsCles.map((point) => <li>· {point}</li>)}
-  </ul>
-
-  <ContactButtons
-    message={`Bonjour, je suis intéressé(e) par la formule ${formula.nom}.`}
-    class="mt-4"
+  <img
+    src={FORMULA_IMAGE_BY_CATEGORY[formula.categorie]}
+    alt=""
+    class="h-36 w-full object-cover"
+    loading="lazy"
   />
+
+  <div class="flex flex-1 flex-col p-5">
+    {
+      formula.badge && (
+        <span class="mb-2 inline-block w-fit rounded-lg bg-indigo-600 px-2 py-0.5 text-xs font-medium text-white">
+          {formula.badge}
+        </span>
+      )
+    }
+
+    <h3 class="text-lg font-semibold text-white">{formula.nom}</h3>
+    <p class="text-sm text-slate-400">
+      Boite {formula.boite} · {formula.dureeJours} jour(s)
+      {formula.heuresConduite ? ` · ${formula.heuresConduite}h de conduite` : ''}
+    </p>
+
+    <p class="mt-3 text-2xl font-semibold text-white">{(formula.prix / 100).toFixed(0)} €</p>
+    {
+      formula.mensualiteAffichee && (
+        <p class="text-sm text-slate-400">
+          dès {(formula.mensualiteAffichee / 100).toFixed(0)} €/mois
+        </p>
+      )
+    }
+
+    <ul class="mt-3 flex-1 space-y-1 text-sm text-slate-300">
+      {formula.pointsCles.map((point) => <li>· {point}</li>)}
+    </ul>
+
+    <a
+      href={`/permis-accelere/${formula.slug}/`}
+      class="mt-4 inline-block rounded-lg bg-white px-4 py-2 text-center text-sm font-medium text-slate-900 transition-colors hover:bg-slate-200"
+    >
+      Voir les dates
+    </a>
+  </div>
 </article>

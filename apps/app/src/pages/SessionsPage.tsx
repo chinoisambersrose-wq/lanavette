@@ -1,18 +1,11 @@
 import { GEARBOXES } from 'shared';
-import { useState } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { useAuth } from '../auth/AuthContext.js';
+import { useSearchParams } from 'react-router-dom';
+import ContactButtons from '../components/ContactButtons.js';
 import { useCitiesCatalog, useSessionsCatalog } from '../features/catalog/useCatalog.js';
-import { useCreateMyBooking } from '../features/student/useMyBookings.js';
 import { populatedLabel } from '../types/admin.js';
 
 export default function SessionsPage(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const createBooking = useCreateMyBooking();
-  const [error, setError] = useState<string | undefined>(undefined);
 
   const formula = searchParams.get('formula') ?? '';
   const city = searchParams.get('city') ?? '';
@@ -30,22 +23,6 @@ export default function SessionsPage(): JSX.Element {
     if (value) next.set(key, value);
     else next.delete(key);
     setSearchParams(next);
-  }
-
-  async function handleReserve(sessionId: string): Promise<void> {
-    setError(undefined);
-
-    if (!user) {
-      navigate(`/login?redirect=${encodeURIComponent(location.pathname + location.search)}`);
-      return;
-    }
-
-    try {
-      await createBooking.mutateAsync(sessionId);
-      navigate('/mon-compte');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Reservation impossible');
-    }
   }
 
   return (
@@ -79,35 +56,38 @@ export default function SessionsPage(): JSX.Element {
         </select>
       </div>
 
-      {error && <p className="mb-4 rounded bg-red-50 p-2 text-sm text-red-700">{error}</p>}
-
       {isLoading ? (
         <p>Chargement...</p>
       ) : sessions && sessions.length > 0 ? (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {sessions.map((session) => (
-            <div key={session._id} className="rounded-lg border bg-white p-4 shadow-sm">
-              <h2 className="font-semibold text-slate-800">{populatedLabel(session.formulaId)}</h2>
-              <p className="text-sm text-slate-500">
-                Du {new Date(session.dates[0]?.jour ?? '').toLocaleDateString('fr-FR')} au{' '}
-                {new Date(session.dates.at(-1)?.jour ?? '').toLocaleDateString('fr-FR')}
-              </p>
-              <p className="text-sm text-slate-500">{populatedLabel(session.meetingPointId)}</p>
-              <p className="text-sm text-slate-500">
-                Moniteur : {populatedLabel(session.instructorId)}
-              </p>
-              <p className="mt-1 text-sm text-slate-600">
-                {session.placesRestantes} place(s) restante(s)
-              </p>
-              <button
-                onClick={() => handleReserve(session._id)}
-                disabled={createBooking.isPending}
-                className="mt-3 rounded bg-slate-800 px-4 py-2 text-sm text-white hover:bg-slate-700 disabled:opacity-50"
-              >
-                Reserver
-              </button>
-            </div>
-          ))}
+          {sessions.map((session) => {
+            const premierJour = new Date(session.dates[0]?.jour ?? '').toLocaleDateString('fr-FR');
+            const dernierJour = new Date(session.dates.at(-1)?.jour ?? '').toLocaleDateString(
+              'fr-FR',
+            );
+            const formuleNom = populatedLabel(session.formulaId);
+            const meetingPointNom = populatedLabel(session.meetingPointId);
+
+            return (
+              <div key={session._id} className="rounded-lg border bg-white p-4 shadow-sm">
+                <h2 className="font-semibold text-slate-800">{formuleNom}</h2>
+                <p className="text-sm text-slate-500">
+                  Du {premierJour} au {dernierJour}
+                </p>
+                <p className="text-sm text-slate-500">{meetingPointNom}</p>
+                <p className="text-sm text-slate-500">
+                  Moniteur : {populatedLabel(session.instructorId)}
+                </p>
+                <p className="mt-1 text-sm text-slate-600">
+                  {session.placesRestantes} place(s) restante(s)
+                </p>
+                <ContactButtons
+                  message={`Bonjour, je suis intéressé(e) par la formule ${formuleNom}, session du ${premierJour} au ${dernierJour} (${meetingPointNom}).`}
+                  className="mt-3"
+                />
+              </div>
+            );
+          })}
         </div>
       ) : (
         <p className="text-slate-500">Aucune session disponible pour ces criteres.</p>
