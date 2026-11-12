@@ -1,6 +1,6 @@
 ---
-import ContactButtons from '../../components/ContactButtons.astro';
 import FaqAccordion from '../../components/FaqAccordion.astro';
+import LeadContactForm from '../../components/LeadContactForm.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getFormulas, getSessions } from '../../lib/api.js';
 import type { Formula } from '../../lib/api.js';
@@ -99,8 +99,8 @@ const structuredData = [
                 <p class="text-sm text-slate-400">
                   {session.meetingPointId.nom} · {session.placesRestantes} place(s) restante(s)
                 </p>
-                <ContactButtons
-                  message={`Bonjour, je suis intéressé(e) par la formule ${formula.nom}, session ${periode} (${session.meetingPointId.nom}).`}
+                <LeadContactForm
+                  message={`Je suis intéressé(e) par la formule ${formula.nom}, session ${periode} (${session.meetingPointId.nom}).`}
                   class="mt-3"
                 />
               </div>
@@ -113,8 +113,8 @@ const structuredData = [
             Aucune date en ligne pour le moment — contactez-nous pour connaître les prochaines
             sessions.
           </p>
-          <ContactButtons
-            message={`Bonjour, je suis intéressé(e) par la formule ${formula.nom}. Quelles sont les prochaines dates disponibles ?`}
+          <LeadContactForm
+            message={`Je suis intéressé(e) par la formule ${formula.nom}. Quelles sont les prochaines dates disponibles ?`}
             class="mt-3"
           />
         </div>

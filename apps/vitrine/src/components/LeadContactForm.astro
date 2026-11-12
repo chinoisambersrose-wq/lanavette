@@ -1,0 +1,95 @@
+---
+import { snapchatUrl } from '../lib/contact.js';
+
+interface Props {
+  message: string;
+  size?: 'sm' | 'lg';
+  class?: string;
+}
+
+const { message, size = 'sm', class: className = '' } = Astro.props;
+
+const padding = size === 'lg' ? 'px-6 py-3' : 'px-4 py-2';
+const textSize = size === 'lg' ? 'text-base' : 'text-sm';
+---
+
+<div class:list={['lead-contact-card', className]} data-message={message}>
+  <div class="grid grid-cols-1 gap-2 sm:grid-cols-3">
+    <input
+      type="text"
+      class="lead-prenom rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+      placeholder="Prénom"
+      required
+    />
+    <input
+      type="text"
+      class="lead-nom rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+      placeholder="Nom"
+      required
+    />
+    <input
+      type="tel"
+      class="lead-tel rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+      placeholder="Téléphone"
+      required
+    />
+  </div>
+
+  <div class="mt-3 flex flex-wrap items-center gap-2">
+    <a
+      href="#"
+      target="_blank"
+      rel="noopener noreferrer"
+      class:list={[
+        'lead-whatsapp pointer-events-none inline-block rounded-lg bg-white font-medium text-slate-900 opacity-50 transition-colors hover:bg-slate-200',
+        padding,
+        textSize,
+      ]}
+    >
+      WhatsApp
+    </a>
+    <a
+      href={snapchatUrl()}
+      target="_blank"
+      rel="noopener noreferrer"
+      class:list={[
+        'inline-block rounded-lg border border-slate-700 font-medium text-white transition-colors hover:bg-slate-800',
+        padding,
+        textSize,
+      ]}
+    >
+      Snapchat
+    </a>
+  </div>
+  <p class="mt-1 text-xs text-slate-500">
+    Renseignez vos coordonnées pour que le message WhatsApp les inclue automatiquement.
+  </p>
+</div>
+
+<script>
+  import { whatsappUrl } from '../lib/contact.js';
+
+  function setup(card: HTMLElement) {
+    const prenom = card.querySelector('.lead-prenom') as HTMLInputElement;
+    const nom = card.querySelector('.lead-nom') as HTMLInputElement;
+    const tel = card.querySelector('.lead-tel') as HTMLInputElement;
+    const whatsapp = card.querySelector('.lead-whatsapp') as HTMLAnchorElement;
+    const baseMessage = card.dataset.message ?? '';
+
+    function update() {
+      const ready = prenom.value.trim() && nom.value.trim() && tel.value.trim();
+      if (ready) {
+        const fullMessage = `Bonjour, je m'appelle ${prenom.value.trim()} ${nom.value.trim()} (tel: ${tel.value.trim()}). ${baseMessage}`;
+        whatsapp.href = whatsappUrl(fullMessage);
+        whatsapp.classList.remove('pointer-events-none', 'opacity-50');
+      } else {
+        whatsapp.href = '#';
+        whatsapp.classList.add('pointer-events-none', 'opacity-50');
+      }
+    }
+
+    [prenom, nom, tel].forEach((input) => input.addEventListener('input', update));
+  }
+
+  document.querySelectorAll<HTMLElement>('.lead-contact-card').forEach(setup);
+</script>

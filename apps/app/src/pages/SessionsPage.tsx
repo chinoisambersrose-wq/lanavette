@@ -1,6 +1,6 @@
 import { GEARBOXES } from 'shared';
 import { useSearchParams } from 'react-router-dom';
-import ContactButtons from '../components/ContactButtons.js';
+import LeadContactForm from '../components/LeadContactForm.js';
 import { useCitiesCatalog, useSessionsCatalog } from '../features/catalog/useCatalog.js';
 import { populatedLabel } from '../types/admin.js';
 
@@ -81,8 +81,8 @@ export default function SessionsPage(): JSX.Element {
                 <p className="mt-1 text-sm text-slate-600">
                   {session.placesRestantes} place(s) restante(s)
                 </p>
-                <ContactButtons
-                  message={`Bonjour, je suis intéressé(e) par la formule ${formuleNom}, session du ${premierJour} au ${dernierJour} (${meetingPointNom}).`}
+                <LeadContactForm
+                  message={`Je suis intéressé(e) par la formule ${formuleNom}, session du ${premierJour} au ${dernierJour} (${meetingPointNom}).`}
                   className="mt-3"
                 />
               </div>
