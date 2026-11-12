@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { RequireRole } from './auth/RequireRole.js';
 import {
+  BookingsAdminPage,
   CitiesAdminPage,
   ExamResultsAdminPage,
   ExamSlotsAdminPage,
@@ -55,6 +56,7 @@ export default function App(): JSX.Element {
         <Route path="cities" element={<CitiesAdminPage />} />
         <Route path="exam-slots" element={<ExamSlotsAdminPage />} />
         <Route path="sessions" element={<SessionsAdminPage />} />
+        <Route path="bookings" element={<BookingsAdminPage />} />
         <Route path="students" element={<StudentsAdminPage />} />
         <Route path="exam-results" element={<ExamResultsAdminPage />} />
         <Route path="payments" element={<PaymentsAdminPage />} />

@@ -27,6 +27,15 @@ export function useCreateExamSlot() {
   });
 }
 
+export function useUpdateExamSlot() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, input }: { id: string; input: Partial<CreateExamSlotFormInput> }) =>
+      apiClient.patch<ExamSlot>(`/admin/exam-slots/${id}`, input),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: KEY }),
+  });
+}
+
 export function useDeleteExamSlot() {
   const queryClient = useQueryClient();
   return useMutation({

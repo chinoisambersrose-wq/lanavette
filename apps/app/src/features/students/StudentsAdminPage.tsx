@@ -1,7 +1,8 @@
-import { useUsersAdmin } from './useUsersAdmin.js';
+import { useToggleUserActive, useUsersAdmin } from './useUsersAdmin.js';
 
 export default function StudentsAdminPage(): JSX.Element {
   const { data: students, isLoading } = useUsersAdmin('eleve');
+  const toggleActive = useToggleUserActive();
 
   return (
     <div>
@@ -16,6 +17,7 @@ export default function StudentsAdminPage(): JSX.Element {
               <th className="p-2">Nom</th>
               <th className="p-2">Email</th>
               <th className="p-2">Actif</th>
+              <th className="p-2" />
             </tr>
           </thead>
           <tbody>
@@ -26,6 +28,15 @@ export default function StudentsAdminPage(): JSX.Element {
                 </td>
                 <td className="p-2">{student.email}</td>
                 <td className="p-2">{student.actif ? 'Oui' : 'Non'}</td>
+                <td className="p-2">
+                  <button
+                    onClick={() => toggleActive.mutate({ id: student._id, actif: !student.actif })}
+                    disabled={toggleActive.isPending}
+                    className="text-indigo-700 hover:underline disabled:opacity-50"
+                  >
+                    {student.actif ? 'Desactiver' : 'Activer'}
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

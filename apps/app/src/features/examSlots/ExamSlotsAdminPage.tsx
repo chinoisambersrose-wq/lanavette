@@ -1,19 +1,51 @@
 import { useState, type FormEvent } from 'react';
 import { useCitiesAdmin } from '../cities/useCitiesAdmin.js';
-import { useCreateExamSlot, useDeleteExamSlot, useExamSlotsAdmin } from './useExamSlotsAdmin.js';
+import type { ExamSlot } from '../../types/admin.js';
+import {
+  useCreateExamSlot,
+  useDeleteExamSlot,
+  useExamSlotsAdmin,
+  useUpdateExamSlot,
+} from './useExamSlotsAdmin.js';
+
+const emptyForm = { date: '', centreExamen: '', placesTotal: 1, cityId: '' };
 
 export default function ExamSlotsAdminPage(): JSX.Element {
   const { data: examSlots, isLoading } = useExamSlotsAdmin();
   const { data: cities } = useCitiesAdmin();
   const createExamSlot = useCreateExamSlot();
+  const updateExamSlot = useUpdateExamSlot();
   const deleteExamSlot = useDeleteExamSlot();
 
-  const [form, setForm] = useState({ date: '', centreExamen: '', placesTotal: 1, cityId: '' });
+  const [form, setForm] = useState(emptyForm);
+  const [editingId, setEditingId] = useState<string | null>(null);
+
+  function startEdit(slot: ExamSlot): void {
+    setEditingId(slot._id);
+    setForm({
+      date: slot.date.slice(0, 10),
+      centreExamen: slot.centreExamen,
+      placesTotal: slot.placesTotal,
+      cityId: slot.cityId,
+    });
+  }
+
+  function cancelEdit(): void {
+    setEditingId(null);
+    setForm(emptyForm);
+  }
 
   async function handleSubmit(event: FormEvent): Promise<void> {
     event.preventDefault();
-    await createExamSlot.mutateAsync(form);
-    setForm({ date: '', centreExamen: '', placesTotal: 1, cityId: '' });
+
+    if (editingId) {
+      await updateExamSlot.mutateAsync({ id: editingId, input: form });
+      setEditingId(null);
+    } else {
+      await createExamSlot.mutateAsync(form);
+    }
+
+    setForm(emptyForm);
   }
 
   function cityName(cityId: string): string {
@@ -64,9 +96,18 @@ export default function ExamSlotsAdminPage(): JSX.Element {
           onChange={(e) => setForm({ ...form, placesTotal: Number(e.target.value) })}
           className="rounded border px-2 py-1"
         />
-        <button type="submit" className="rounded bg-slate-800 py-1 text-white">
-          Creer
+        <button
+          type="submit"
+          disabled={createExamSlot.isPending || updateExamSlot.isPending}
+          className="rounded bg-slate-800 py-1 text-white"
+        >
+          {editingId ? 'Enregistrer' : 'Creer'}
         </button>
+        {editingId && (
+          <button type="button" onClick={cancelEdit} className="rounded border py-1 text-slate-600">
+            Annuler
+          </button>
+        )}
       </form>
 
       {isLoading ? (
@@ -91,7 +132,13 @@ export default function ExamSlotsAdminPage(): JSX.Element {
                 <td className="p-2">
                   {slot.placesAffectees} / {slot.placesTotal}
                 </td>
-                <td className="p-2">
+                <td className="space-x-3 p-2">
+                  <button
+                    onClick={() => startEdit(slot)}
+                    className="text-slate-700 hover:underline"
+                  >
+                    Modifier
+                  </button>
                   <button
                     onClick={() => deleteExamSlot.mutate(slot._id)}
                     className="text-red-600 hover:underline"

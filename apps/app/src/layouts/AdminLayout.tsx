@@ -6,6 +6,7 @@ const links = [
   { to: '/admin/cities', label: 'Villes & RDV' },
   { to: '/admin/exam-slots', label: "Creneaux d'examen" },
   { to: '/admin/sessions', label: 'Sessions' },
+  { to: '/admin/bookings', label: 'Reservations' },
   { to: '/admin/students', label: 'Eleves' },
   { to: '/admin/exam-results', label: "Resultats d'examen" },
   { to: '/admin/payments', label: 'Paiements' },
