@@ -1,0 +1,38 @@
+---
+const items = [
+  {
+    href: '/permis-moto-accelere/',
+    image: '/images/moto-nuit.webp',
+    category: 'Permis moto',
+    title: 'Permis moto accéléré',
+  },
+  {
+    href: '/permis-b-accelere/#aac',
+    image: '/images/acc-duo.webp',
+    category: 'Conduite accompagnée',
+    title: 'Apprendre accompagné, réussir plus vite',
+  },
+];
+---
+
+<section class="mx-auto max-w-6xl px-4 py-16">
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+    {
+      items.map((item) => (
+        <a href={item.href} class="group relative block overflow-hidden rounded-xl">
+          <img
+            src={item.image}
+            alt={item.title}
+            class="h-72 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/10 to-transparent" />
+          <div class="absolute bottom-0 p-5">
+            <p class="text-sm font-medium text-indigo-300">{item.category}</p>
+            <p class="mt-1 text-xl font-semibold text-white">{item.title}</p>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</section>

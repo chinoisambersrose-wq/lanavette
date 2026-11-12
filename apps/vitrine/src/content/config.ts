@@ -6,6 +6,7 @@ const blog = defineCollection({
     description: z.string(),
     publishDate: z.date(),
     author: z.string().default('NAVETTE'),
+    category: z.string().default('Permis accéléré'),
   }),
 });
 

@@ -2,6 +2,7 @@
 title: 'Comment choisir sa formule de permis accéléré ?'
 description: "Les critères pour choisir entre un stage intensif, une conduite accompagnée ou une représentation à l'examen."
 publishDate: 2026-10-01
+category: 'Choix de formule'
 ---
 
 _Article de démonstration — à remplacer par un vrai article avant mise en ligne._

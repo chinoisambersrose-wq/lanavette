@@ -2,6 +2,7 @@
 title: 'Financer son permis avec le CPF'
 description: 'Les grandes étapes pour utiliser son Compte Personnel de Formation pour payer un stage de permis accéléré.'
 publishDate: 2026-10-15
+category: 'Financement'
 ---
 
 _Article de démonstration — à faire valider par un conseil juridique avant mise en ligne._

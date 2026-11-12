@@ -1,9 +1,11 @@
 ---
+import AdvicePreview from '../components/AdvicePreview.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
 import ContactBand from '../components/ContactBand.astro';
 import CtaBanner from '../components/CtaBanner.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import FormulaCard from '../components/FormulaCard.astro';
+import PhotoHighlights from '../components/PhotoHighlights.astro';
 import TestimonialBlock from '../components/TestimonialBlock.astro';
 import TrustStats from '../components/TrustStats.astro';
 import WhyChooseUs from '../components/WhyChooseUs.astro';
@@ -131,11 +133,15 @@ const structuredData = [
     </script>
   </section>
 
+  <PhotoHighlights />
+
   <WhyChooseUs />
 
   <ComparisonTable />
 
   <TestimonialBlock />
+
+  <AdvicePreview />
 
   <section class="mx-auto max-w-6xl px-4 py-16">
     <h2 class="mb-6 text-center text-2xl font-semibold text-slate-900">Nos villes</h2>
