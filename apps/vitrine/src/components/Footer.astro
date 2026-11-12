@@ -1,8 +1,15 @@
+---
+import { CONTACT_EMAIL } from '../lib/contact.js';
+---
+
 <footer class="mt-16 border-t border-slate-800 bg-slate-950">
   <div class="mx-auto grid max-w-6xl gap-8 px-4 py-10 text-sm text-slate-300 md:grid-cols-4">
     <div>
       <p class="mb-2 text-lg font-semibold text-white">NAVETTE</p>
       <p>Permis en accéléré, dates et moniteur connus avant de payer.</p>
+      <p class="mt-3">
+        <a href={`mailto:${CONTACT_EMAIL}`} class="hover:underline">{CONTACT_EMAIL}</a>
+      </p>
     </div>
 
     <div>
