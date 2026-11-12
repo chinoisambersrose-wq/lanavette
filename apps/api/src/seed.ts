@@ -79,7 +79,51 @@ async function seed(): Promise<void> {
     telephone: '0600000004',
   });
 
-  const city = await City.create({ slug: 'ville-demo', nom: '[DEMO] Ville', actif: true });
+  const city = await City.create({ slug: 'lyon', nom: 'Lyon', actif: true });
+
+  logger.info('Creation des villes desservies...');
+  await City.create(
+    [
+      'Paris',
+      'Marseille',
+      'Toulouse',
+      'Nice',
+      'Nantes',
+      'Strasbourg',
+      'Montpellier',
+      'Bordeaux',
+      'Lille',
+      'Rennes',
+      'Reims',
+      'Le Havre',
+      'Saint-Étienne',
+      'Toulon',
+      'Grenoble',
+      'Dijon',
+      'Angers',
+      'Nîmes',
+      'Villeurbanne',
+      'Le Mans',
+      'Aix-en-Provence',
+      'Clermont-Ferrand',
+      'Brest',
+      'Tours',
+      'Limoges',
+      'Amiens',
+      'Metz',
+      'Besançon',
+      'Perpignan',
+    ].map((nom) => ({
+      slug: nom
+        .normalize('NFD')
+        .replace(/[̀-ͯ]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, ''),
+      nom,
+      actif: true,
+    })),
+  );
 
   await InstructorProfile.create([
     {
