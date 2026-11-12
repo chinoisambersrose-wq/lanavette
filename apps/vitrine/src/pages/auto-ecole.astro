@@ -1,11 +1,13 @@
 ---
+import CitiesMap from '../components/CitiesMap.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCities, getMeetingPoints } from '../lib/api.js';
 
 const cities = await getCities();
-const meetingPointsByCity = await Promise.all(
-  cities.map(async (city) => ({ city, points: await getMeetingPoints(city.slug) })),
-);
+const meetingPointsByCity = [];
+for (const city of cities) {
+  meetingPointsByCity.push({ city, points: await getMeetingPoints(city.slug) });
+}
 ---
 
 <BaseLayout
@@ -21,9 +23,12 @@ const meetingPointsByCity = await Promise.all(
     />
     <h1 class="text-3xl font-semibold text-white">Nos agences</h1>
     <p class="mt-2 text-sm text-slate-500">
-      Carte interactive à venir (nécessite une clé Mapbox ou Google Maps) — liste des points de
-      RDV en attendant.
+      Nos villes desservies. Cliquez sur un marqueur pour accéder à la page de la ville.
     </p>
+
+    <div class="mt-6">
+      <CitiesMap cities={cities} />
+    </div>
 
     <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
       {

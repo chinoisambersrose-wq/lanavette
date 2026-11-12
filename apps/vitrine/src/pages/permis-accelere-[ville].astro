@@ -6,13 +6,16 @@ import type { City, MeetingPoint } from '../lib/api.js';
 
 export async function getStaticPaths() {
   const cities = await getCities();
+  const paths = [];
 
-  return Promise.all(
-    cities.map(async (city) => ({
+  for (const city of cities) {
+    paths.push({
       params: { ville: city.slug },
       props: { city, meetingPoints: await getMeetingPoints(city.slug) },
-    })),
-  );
+    });
+  }
+
+  return paths;
 }
 
 interface Props {
