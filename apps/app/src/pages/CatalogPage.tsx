@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import ContactButtons from '../components/ContactButtons.js';
 import { useFormulasCatalog } from '../features/catalog/useCatalog.js';
 
 export default function CatalogPage(): JSX.Element {
@@ -37,12 +37,10 @@ export default function CatalogPage(): JSX.Element {
                 <li key={point}>• {point}</li>
               ))}
             </ul>
-            <Link
-              to={`/sessions?formula=${formula.slug}`}
-              className="mt-4 inline-block rounded bg-slate-800 px-4 py-2 text-sm text-white hover:bg-slate-700"
-            >
-              Voir les dates
-            </Link>
+            <ContactButtons
+              message={`Bonjour, je suis intéressé(e) par la formule ${formula.nom}.`}
+              className="mt-4"
+            />
           </div>
         ))}
       </div>
