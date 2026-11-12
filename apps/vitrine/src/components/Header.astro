@@ -1,5 +1,7 @@
 ---
 import ContactButtons from './ContactButtons.astro';
+import Icon from './Icon.astro';
+import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL } from '../lib/contact.js';
 
 const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
 
@@ -84,14 +86,76 @@ const links: NavItem[] = [
       }
     </nav>
 
-    <div class="flex items-center gap-3">
+    <div class="hidden items-center gap-3 lg:flex">
       <a
         href={`${APP_URL}/login`}
-        class="hidden text-sm text-slate-300 transition-colors hover:text-white sm:inline"
+        class="text-sm text-slate-300 transition-colors hover:text-white"
       >
         Connexion
       </a>
       <ContactButtons message="Bonjour, je souhaite m'inscrire à un stage de permis accéléré NAVETTE." />
     </div>
+
+    <div class="flex items-center gap-4 lg:hidden">
+      <a
+        href={`tel:${CONTACT_PHONE_TEL}`}
+        class="flex items-center gap-1.5 text-sm text-slate-200 transition-colors hover:text-white"
+      >
+        <Icon name="phone" class="h-4 w-4" />
+        <span class="whitespace-nowrap">{CONTACT_PHONE_DISPLAY}</span>
+      </a>
+      <button
+        id="mobile-menu-toggle"
+        type="button"
+        aria-label="Ouvrir le menu"
+        aria-expanded="false"
+        class="text-slate-200 hover:text-white"
+      >
+        <span id="mobile-menu-icon-open"><Icon name="menu" class="h-6 w-6" /></span>
+        <span id="mobile-menu-icon-close" class="hidden"><Icon name="close" class="h-6 w-6" /></span>
+      </button>
+    </div>
   </div>
+
+  <nav
+    id="mobile-menu"
+    class="hidden max-h-[calc(100vh-57px)] overflow-y-auto border-t border-slate-800 bg-slate-950 px-4 py-4 lg:hidden"
+  >
+    {
+      links.map((link) => (
+        <div class="border-b border-slate-800 py-2 last:border-none">
+          <a href={link.href} class="block py-1.5 font-medium text-white">
+            {link.label}
+          </a>
+          {link.children && (
+            <div class="ml-3 flex flex-col">
+              {link.children.map((child) => (
+                <a href={child.href} class="py-1.5 text-sm text-slate-400 hover:text-white">
+                  {child.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      ))
+    }
+    <a href={`${APP_URL}/login`} class="block py-3 font-medium text-white">
+      Connexion
+    </a>
+  </nav>
 </header>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('mobile-menu-icon-open');
+  const iconClose = document.getElementById('mobile-menu-icon-close');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    iconOpen?.classList.toggle('hidden');
+    iconClose?.classList.toggle('hidden');
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+</script>
