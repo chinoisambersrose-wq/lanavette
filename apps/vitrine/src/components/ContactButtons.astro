@@ -1,0 +1,41 @@
+---
+import { snapchatUrl, whatsappUrl } from '../lib/contact.js';
+
+interface Props {
+  message: string;
+  size?: 'sm' | 'lg';
+  class?: string;
+}
+
+const { message, size = 'sm', class: className = '' } = Astro.props;
+
+const padding = size === 'lg' ? 'px-6 py-3' : 'px-4 py-2';
+const textSize = size === 'lg' ? 'text-base' : 'text-sm';
+---
+
+<div class:list={['flex flex-wrap items-center gap-2', className]}>
+  <a
+    href={whatsappUrl(message)}
+    target="_blank"
+    rel="noopener noreferrer"
+    class:list={[
+      'inline-block rounded-lg bg-white font-medium text-slate-900 transition-colors hover:bg-slate-200',
+      padding,
+      textSize,
+    ]}
+  >
+    WhatsApp
+  </a>
+  <a
+    href={snapchatUrl()}
+    target="_blank"
+    rel="noopener noreferrer"
+    class:list={[
+      'inline-block rounded-lg border border-slate-700 font-medium text-white transition-colors hover:bg-slate-800',
+      padding,
+      textSize,
+    ]}
+  >
+    Snapchat
+  </a>
+</div>

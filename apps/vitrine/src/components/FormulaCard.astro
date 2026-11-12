@@ -1,4 +1,5 @@
 ---
+import ContactButtons from './ContactButtons.astro';
 import type { Formula } from '../lib/api.js';
 
 interface Props {
@@ -6,7 +7,6 @@ interface Props {
 }
 
 const { formula } = Astro.props;
-const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
 ---
 
 <article
@@ -42,10 +42,8 @@ const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
     {formula.pointsCles.map((point) => <li>· {point}</li>)}
   </ul>
 
-  <a
-    href={`${APP_URL}/sessions?formula=${formula.slug}`}
-    class="mt-4 inline-block rounded-lg bg-white px-4 py-2 text-center text-sm font-medium text-slate-900 transition-colors hover:bg-slate-200"
-  >
-    Voir les dates
-  </a>
+  <ContactButtons
+    message={`Bonjour, je suis intéressé(e) par la formule ${formula.nom}.`}
+    class="mt-4"
+  />
 </article>

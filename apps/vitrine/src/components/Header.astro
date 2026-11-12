@@ -1,4 +1,6 @@
 ---
+import ContactButtons from './ContactButtons.astro';
+
 const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
 
 interface NavItem {
@@ -89,12 +91,7 @@ const links: NavItem[] = [
       >
         Connexion
       </a>
-      <a
-        href={`${APP_URL}/inscription`}
-        class="rounded-lg bg-white px-4 py-2 text-sm font-medium text-slate-900 transition-colors hover:bg-slate-200"
-      >
-        Je m&apos;inscris
-      </a>
+      <ContactButtons message="Bonjour, je souhaite m'inscrire à un stage de permis accéléré NAVETTE." />
     </div>
   </div>
 </header>

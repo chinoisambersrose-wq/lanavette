@@ -1,5 +1,5 @@
 ---
-const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
+import ContactButtons from './ContactButtons.astro';
 
 const points = [
   'Dates et moniteur connus avant de payer',
@@ -30,11 +30,10 @@ const points = [
       }
     </ul>
 
-    <a
-      href={`${APP_URL}/inscription`}
-      class="mt-6 inline-block rounded-lg bg-white px-6 py-3 font-medium text-slate-900 transition-colors hover:bg-slate-100"
-    >
-      Je m&apos;inscris
-    </a>
+    <ContactButtons
+      message="Bonjour, je souhaite m'inscrire à un stage de permis accéléré NAVETTE."
+      size="lg"
+      class="mt-6 justify-center"
+    />
   </div>
 </section>
