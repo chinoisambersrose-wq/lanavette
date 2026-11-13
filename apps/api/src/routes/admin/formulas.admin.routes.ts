@@ -5,6 +5,7 @@ import { ApiError } from '../../middleware/errorHandler.js';
 import { validateBody } from '../../middleware/validate.js';
 import { Formula } from '../../models/Formula.js';
 import { recordAuditLog } from '../../services/auditLog.service.js';
+import { triggerVitrineRedeploy } from '../../services/deployHook.service.js';
 
 export const formulasAdminRouter = Router();
 
@@ -23,6 +24,7 @@ formulasAdminRouter.post('/', validateBody(createFormulaSchema), async (req, res
   try {
     const formula = await Formula.create(req.body);
     await recordAuditLog(req.user!.sub, 'formula.create', undefined, formula.toObject());
+    triggerVitrineRedeploy();
     res.status(201).json({ data: formula });
   } catch (err) {
     next(err);
@@ -47,6 +49,7 @@ formulasAdminRouter.patch('/:id', validateBody(updateFormulaSchema), async (req,
       await recordAuditLog(req.user!.sub, 'formula.update', avant, formula.toObject());
     }
 
+    triggerVitrineRedeploy();
     res.json({ data: formula });
   } catch (err) {
     next(err);
@@ -66,6 +69,7 @@ formulasAdminRouter.delete('/:id', async (req, res, next) => {
     await formula.save();
     await recordAuditLog(req.user!.sub, 'formula.archive', avant, formula.toObject());
 
+    triggerVitrineRedeploy();
     res.status(204).send();
   } catch (err) {
     next(err);

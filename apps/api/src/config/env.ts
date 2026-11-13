@@ -11,6 +11,7 @@ const envSchema = z.object({
   JWT_REFRESH_TTL: z.string().default('30d'),
   APP_ORIGIN: z.string().default('http://localhost:5173'),
   VITRINE_ORIGIN: z.string().default('http://localhost:4321'),
+  VITRINE_DEPLOY_HOOK_URL: z.string().optional(),
   BOOKING_HOLD_DURATION_MINUTES: z.coerce.number().int().positive().default(15),
   CANCELLATION_FREE_DAYS_BEFORE_START: z.coerce.number().int().nonnegative().default(7),
   BOOKING_EXPIRATION_CRON: z.string().default('*/1 * * * *'),
