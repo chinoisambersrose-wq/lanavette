@@ -15,7 +15,19 @@ const emptyForm = {
   boite: GEARBOXES[0] as Gearbox,
   dureeJours: 1,
   prix: 0,
+  pointsCles: '',
 };
+
+function pointsClesToText(pointsCles: string[]): string {
+  return pointsCles.join('\n');
+}
+
+function pointsClesFromText(text: string): string[] {
+  return text
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
+}
 
 export default function FormulasAdminPage(): JSX.Element {
   const { data: formulas, isLoading } = useFormulasAdmin();
@@ -34,6 +46,7 @@ export default function FormulasAdminPage(): JSX.Element {
       boite: formula.boite,
       dureeJours: formula.dureeJours,
       prix: formula.prix,
+      pointsCles: pointsClesToText(formula.pointsCles),
     });
   }
 
@@ -45,11 +58,13 @@ export default function FormulasAdminPage(): JSX.Element {
   async function handleSubmit(event: FormEvent): Promise<void> {
     event.preventDefault();
 
+    const input = { ...form, pointsCles: pointsClesFromText(form.pointsCles) };
+
     if (editingId) {
-      await updateFormula.mutateAsync({ id: editingId, input: form });
+      await updateFormula.mutateAsync({ id: editingId, input });
       setEditingId(null);
     } else {
-      await createFormula.mutateAsync({ ...form, pointsCles: [] });
+      await createFormula.mutateAsync(input);
     }
 
     setForm(emptyForm);
@@ -116,6 +131,13 @@ export default function FormulasAdminPage(): JSX.Element {
           value={form.prix}
           onChange={(e) => setForm({ ...form, prix: Number(e.target.value) })}
           className="rounded border px-2 py-1"
+        />
+        <textarea
+          placeholder="Points cles (un par ligne)"
+          rows={3}
+          value={form.pointsCles}
+          onChange={(e) => setForm({ ...form, pointsCles: e.target.value })}
+          className="col-span-2 rounded border px-2 py-1 md:col-span-6"
         />
         <button
           type="submit"
