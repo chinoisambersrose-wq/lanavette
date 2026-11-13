@@ -190,7 +190,7 @@ erDiagram
 | `users` | email, motDePasseHash, role (eleve, moniteur, admin), prenom, nom, telephone, dateNaissance, adresse, actif, createdAt | — |
 | `studentProfiles` | neph, codeObtenu, boitePreferee, documents[] (type, url, statut), notes internes | userId |
 | `instructorProfiles` | photo, villes, boites, vehicule, disponibilites[] (debut, fin), statut (salarie, independant) | userId |
-| `formulas` | slug, nom, categorie (voiture, conduite_accompagnee, code, moto, passerelle), boite, heuresConduite, dureeJours, prix (centimes), mensualiteAffichee, pointsCles[], badge, actif, ordre | — |
+| `formulas` | slug, nom, categorie (voiture, conduite_accompagnee, code, moto, passerelle, poids_lourd), boite, heuresConduite, dureeJours, prix (centimes), mensualiteAffichee, pointsCles[], badge, actif, ordre | — |
 | `cities` | nom, slug, actif | — |
 | `meetingPoints` | nom, adresse, location (GeoJSON), boites | cityId |
 | `examSlots` | date, centreExamen, placesTotal, placesAffectees | cityId |

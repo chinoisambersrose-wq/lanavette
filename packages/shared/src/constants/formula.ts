@@ -5,6 +5,7 @@ export const FORMULA_CATEGORIES = [
   'code',
   'passerelle',
   'moto',
+  'poids_lourd',
 ] as const;
 
 export type FormulaCategory = (typeof FORMULA_CATEGORIES)[number];

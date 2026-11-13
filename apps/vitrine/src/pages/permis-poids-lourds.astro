@@ -1,0 +1,82 @@
+---
+import FormulaCard from '../components/FormulaCard.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCities, getFormulas } from '../lib/api.js';
+
+const formulas = (await getFormulas()).filter((f) => f.categorie === 'poids_lourd');
+const cities = await getCities();
+---
+
+<BaseLayout
+  title="Permis poids lourds accéléré — NAVETTE"
+  description="Stage de permis poids lourds en accéléré avec NAVETTE : catégories de permis, nos formules et où les passer."
+>
+  <section class="mx-auto max-w-4xl px-4 py-12">
+    <h1 class="text-3xl font-semibold text-white">Permis poids lourds accéléré</h1>
+    <p class="mt-3 max-w-2xl text-slate-300">
+      Comme pour le permis B, NAVETTE applique sa méthode au permis poids lourds : un moniteur
+      unique, un planning clair et une date d'examen garantie avant de payer.
+    </p>
+  </section>
+
+  <section id="tout-savoir" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-10">
+    <h2 class="text-2xl font-semibold text-white">Permis poids lourds : tout savoir</h2>
+    <p class="mt-2 text-slate-300">
+      Le permis poids lourds se décline en plusieurs catégories selon le type et le poids du
+      véhicule : C1 (véhicules de 3,5 à 7,5 tonnes, dès 18 ans), C (véhicules de plus de 7,5
+      tonnes, dès 21 ans) et CE (poids lourds avec remorque). L'exercice professionnel de la
+      conduite nécessite également la FIMO (Formation Initiale Minimale Obligatoire), puis la FCO
+      tous les 5 ans. L'examen comprend une épreuve théorique, une épreuve de maniabilité et une
+      épreuve de circulation.
+    </p>
+  </section>
+
+  <section id="stages" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-10">
+    <h2 class="text-2xl font-semibold text-white">Nos stages poids lourds accélérés</h2>
+    {
+      formulas.length > 0 ? (
+        <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+          {formulas.map((formula) => <FormulaCard formula={formula} />)}
+        </div>
+      ) : (
+        <p class="mt-4 text-sm text-slate-400">
+          Aucun stage poids lourds disponible pour le moment.
+        </p>
+      )
+    }
+  </section>
+
+  <section id="villes" class="bg-slate-950 py-12 text-white">
+    <div class="mx-auto max-w-4xl px-4">
+      <h2 class="text-2xl font-semibold">Où passer son permis poids lourds accéléré ?</h2>
+      <p class="mt-2 text-slate-300">
+        Nos stages poids lourds sont proposés dans les villes où NAVETTE est présente, avec des
+        points de rendez-vous et des créneaux d'examen locaux.
+      </p>
+      {
+        cities.length > 0 && (
+          <div class="mt-4 flex flex-wrap gap-2">
+            {cities.map((city) => (
+              <a
+                href={`/permis-accelere-${city.slug}/`}
+                class="rounded-lg border border-white/15 px-3 py-1.5 text-sm text-slate-200 transition-colors hover:bg-white/5"
+              >
+                {city.nom}
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <section id="fimo-fco" class="mx-auto max-w-4xl scroll-mt-20 px-4 py-10">
+    <h2 class="text-2xl font-semibold text-white">FIMO et FCO</h2>
+    <p class="mt-2 text-slate-300">
+      La FIMO est obligatoire pour conduire un poids lourds à titre professionnel ; elle complète
+      le permis C ou CE. La FCO (Formation Continue Obligatoire) doit ensuite être renouvelée tous
+      les 5 ans pour continuer à exercer. Ces formations peuvent être intégrées à votre parcours
+      en fonction de votre projet professionnel.
+    </p>
+  </section>
+</BaseLayout>

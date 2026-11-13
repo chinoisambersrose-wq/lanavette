@@ -9,4 +9,6 @@ export const FORMULA_IMAGE_BY_CATEGORY: Record<FormulaCategory, string> = {
   passerelle:
     'https://images.unsplash.com/photo-1476231682828-37e571bc172f?auto=format&fit=crop&w=800&q=60',
   moto: '/images/moto-nuit.webp',
+  poids_lourd:
+    'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=800&q=60',
 };
