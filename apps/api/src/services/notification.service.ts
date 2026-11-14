@@ -1,14 +1,14 @@
 import { env } from '../config/env.js';
 import { logger } from '../config/logger.js';
 
-const BREVO_EMAIL_URL = 'https://api.brevo.com/v3/smtp/email';
+const RESEND_EMAIL_URL = 'https://api.resend.com/emails';
 const BREVO_SMS_URL = 'https://api.brevo.com/v3/transactionalSMS/sms';
 
 /** Adresse d'invitation Trustpilot (transfert automatique : Trustpilot invite le destinataire a laisser un avis). */
 const TRUSTPILOT_INVITE_EMAIL = 'lanavete.com+8b305bac09@invite.trustpilot.com';
 
 /**
- * Envoie un email transactionnel via Brevo. Sans `BREVO_API_KEY` (dev/preprod sans compte),
+ * Envoie un email transactionnel via Resend. Sans `RESEND_API_KEY` (dev/preprod sans compte),
  * l'envoi est seulement journalise : meme comportement de gating que Stripe/S3/Alma.
  */
 export async function sendEmail(
@@ -17,25 +17,28 @@ export async function sendEmail(
   htmlContent: string,
   bcc?: string[],
 ): Promise<void> {
-  if (!env.BREVO_API_KEY) {
-    logger.info({ to, subject }, '[notification email non envoyee, BREVO_API_KEY absente]');
+  if (!env.RESEND_API_KEY) {
+    logger.info({ to, subject }, '[notification email non envoyee, RESEND_API_KEY absente]');
     return;
   }
 
-  const response = await fetch(BREVO_EMAIL_URL, {
+  const response = await fetch(RESEND_EMAIL_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'api-key': env.BREVO_API_KEY },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+    },
     body: JSON.stringify({
-      sender: { name: env.BREVO_SENDER_NAME, email: env.BREVO_SENDER_EMAIL },
-      to: [{ email: to }],
-      ...(bcc?.length ? { bcc: bcc.map((email) => ({ email })) } : {}),
+      from: `${env.RESEND_SENDER_NAME} <${env.RESEND_SENDER_EMAIL}>`,
+      to: [to],
+      ...(bcc?.length ? { bcc } : {}),
       subject,
-      htmlContent,
+      html: htmlContent,
     }),
   });
 
   if (!response.ok) {
-    logger.error({ to, subject, status: response.status }, "Echec de l'envoi d'email via Brevo");
+    logger.error({ to, subject, status: response.status }, "Echec de l'envoi d'email via Resend");
   }
 }
 

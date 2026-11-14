@@ -39,7 +39,7 @@ docs/
 | Base | MongoDB Atlas (région UE) |
 | Fichiers | Cloudflare R2 ou S3, URL signées |
 | Paiement | Stripe Checkout + webhooks (Alma pour le paiement en plusieurs fois) |
-| Emails / SMS | Brevo (ou Resend + Twilio) |
+| Emails / SMS | Resend (emails) + Brevo (SMS) |
 | Tâches planifiées | node-cron (V1), BullMQ + Redis si besoin |
 
 ## Commandes (à créer au Lot 1, garder cette liste à jour)
