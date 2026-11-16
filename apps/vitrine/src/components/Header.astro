@@ -1,7 +1,7 @@
 ---
 import ContactButtons from './ContactButtons.astro';
 import Icon from './Icon.astro';
-import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL } from '../lib/contact.js';
+import { whatsappUrl } from '../lib/contact.js';
 
 const APP_URL = import.meta.env.APP_URL ?? 'http://localhost:5173';
 
@@ -108,11 +108,13 @@ const links: NavItem[] = [
 
     <div class="flex items-center gap-4 lg:hidden">
       <a
-        href={`tel:${CONTACT_PHONE_TEL}`}
+        href={whatsappUrl("Bonjour, je souhaite m'inscrire à un stage de permis accéléré NAVETTE.")}
+        target="_blank"
+        rel="noopener noreferrer"
         class="flex items-center gap-1.5 text-sm text-slate-200 transition-colors hover:text-white"
       >
-        <Icon name="phone" class="h-4 w-4" />
-        <span class="whitespace-nowrap">{CONTACT_PHONE_DISPLAY}</span>
+        <Icon name="message" class="h-4 w-4" />
+        <span class="whitespace-nowrap">WhatsApp</span>
       </a>
       <button
         id="mobile-menu-toggle"
